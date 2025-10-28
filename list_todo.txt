@@ -1,0 +1,15 @@
+
+
+--QUESTIONS--
+// TODO - ask about comments
+// TODO - ask about spaces in code style
+
+// TODO - push_before
+// TODO - 
+
+--TO READ--
+// TODO - read about dynamic memory in kernigan 
+
+
+--ADDITIONAL TO READ--
+// TODO - read about processor tacts
