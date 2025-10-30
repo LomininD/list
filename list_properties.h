@@ -11,14 +11,15 @@ typedef int lst_t;
 struct lst
 {
     lst_t* data;
-    size_t* next;
-    size_t* prev;
+    ssize_t* next;
+    ssize_t* prev;
     
-    size_t size;
-    size_t head_pos;
-    size_t tail_pos;
-    size_t free_pos;
-    size_t current_pos;
+    ssize_t capacity;
+    //ssize_t head_pos;
+    //ssize_t tail_pos;
+    ssize_t free_pos;
+    ssize_t size;
+    //ssize_t current_pos;
 
     err_t err_stat;
     md_t debug_mode;
