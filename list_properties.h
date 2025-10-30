@@ -8,16 +8,12 @@ const int poison_value = 0xbadf00d;
 
 typedef int lst_t;
 
-struct ind_data
-{
-    size_t* next;
-    size_t* prev;
-};
-
 struct lst
 {
     lst_t* data;
-    ind_data ind_arr;
+    size_t* next;
+    size_t* prev;
+    
     size_t size;
     size_t head_pos;
     size_t tail_pos;

@@ -2,3 +2,4 @@
 
 FILE* log_ptr = NULL;
 
+

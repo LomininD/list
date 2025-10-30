@@ -11,7 +11,7 @@ CPPFLAGS = -g0 -D _DEBUG -ggdb3 -std=c++17 -O0 -Wall -Wextra -Weffc++ -Wc++14-co
 
 BUILD = build
 
-SRCMODULES = list_functions.cpp debug.cpp
+SRCMODULES = list_functions.cpp debug.cpp list_dump.cpp image_generator.cpp
 OBJMODULES = $(SRCMODULES:.cpp=.o)
 
 $(BUILD)/list: main.cpp $(addprefix $(BUILD)/,$(OBJMODULES))
