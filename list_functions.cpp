@@ -2,6 +2,9 @@
 #include "image_generator.h"
 #include <assert.h>
 
+static err_t allocate_list_memory(lst* list, size_t capacity);
+static err_t reallocate_list_memory(lst* list);
+
 
 err_t list_ctor(lst* list, size_t capacity)
 {
@@ -170,6 +173,9 @@ ssize_t insert_after(lst* list, ssize_t pos, lst_t el)
     VERIFY_LIST();
 
     printf_log_msg(debug_mode, "insert_after: insertion finished\n");
+    if (debug_mode == on)
+        generate_dump_image(list);
+
     return insertion_pos;
 }
 
@@ -208,6 +214,9 @@ ssize_t insert_before(lst* list, ssize_t pos, lst_t el)
     VERIFY_LIST();
 
     printf_log_msg(debug_mode, "insert_before: insertion finished\n");
+    if (debug_mode == on)
+        generate_dump_image(list);
+
     return insertion_pos;
 }
 
@@ -239,6 +248,9 @@ err_t delete_ind(lst* list, ssize_t pos)
     VERIFY_LIST();
 
     printf_log_msg(debug_mode, "delete_ind: deleting finished\n");
+    if (debug_mode == on)
+        generate_dump_image(list);
+        
     return ok;
 }
 

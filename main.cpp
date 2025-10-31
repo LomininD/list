@@ -25,7 +25,7 @@ int main()
     list.prev[6] = 300;
 
     insert_after(&list, 8, 900);
-    print_dump(&list, diagnostic);
+    //print_dump(&list, diagnostic);
 
 
     for (size_t i = 0; i < get_list_capacity(&list); i++)

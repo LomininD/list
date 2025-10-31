@@ -121,14 +121,14 @@ void print_dump(const lst* list, dump_purpose purpose)
 
     md_t debug_mode = list->debug_mode;
 
-    printf_log_msg(debug_mode, "\n=================================LIST DUMP=================================\n\n");
+    printf_log_bold(debug_mode, "\n=================================LIST DUMP=================================\n\n", NULL);
 
     if (purpose == diagnostic)
         printf_log_msg(debug_mode, "cause: diagnostic\n\n");
     else
         printf_log_msg(debug_mode, "cause: error\n\n");
 
-    printf_log_bold(debug_mode, "list [%p]\n", list);
+    printf_log_bold(debug_mode, "list [%p]\n\n", list);
     printf_log_msg(debug_mode, "capacity = %zu\n", list->capacity);
     printf_log_msg(debug_mode, "size = %zu\n\n", list->size);
 
@@ -157,7 +157,7 @@ void print_dump(const lst* list, dump_purpose purpose)
         printf_log_msg(debug_mode, "\n");
     }
 
-    printf_log_msg(debug_mode, "\n==========================================================================\n\n");
+    printf_log_bold(debug_mode, "\n==========================================================================\n\n", NULL);
 
     generate_dump_image(list);
 }

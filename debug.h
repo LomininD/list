@@ -40,20 +40,12 @@ while(0)
 }                                               \
 while(0)
 
-#define printf_log_grey(mode, text, ...) do{                                \
-    if (mode == on)                                                         \
-    {                                                                       \
-        printf(MAKE_GREY(text), __VA_ARGS__);                               \
-        fprintf(log_ptr, text, __VA_ARGS__);                                \
-    }                                                                       \
-}                                                                           \
-while(0)
 
 #define printf_log_bold(mode, text, ...) do{                                \
     if (mode == on)                                                         \
     {                                                                       \
         printf(MAKE_BOLD(text), __VA_ARGS__);                               \
-        fprintf(log_ptr, text, __VA_ARGS__);                                \
+        fprintf(log_ptr, "<b>" text "</b>", __VA_ARGS__);                   \
     }                                                                       \
 }                                                                           \
 while(0)
@@ -64,32 +56,9 @@ while(0)
     if (mode == on)                                                           \
     {                                                                         \
         fprintf(log_ptr, "\n");                                               \
-        fprintf(log_ptr, "\n" "ERROR: " __VA_ARGS__);                         \
+        fprintf(log_ptr, "\n" "<b><font color = \"#FF2B00\">ERROR:</font></b> " __VA_ARGS__);     \
     }                                                                         \
 }                                                                             \
-while(0)
-
-#define printf_warn(mode, ...) do{                                          \
-    printf("\n");                                                           \
-    printf("\n" MAKE_BOLD("WARNING: ") __VA_ARGS__);                        \
-    if (mode == on)                                                         \
-    {                                                                       \
-        fprintf(log_ptr, "\n");                                             \
-        fprintf(log_ptr, "\n" "WARNING: " __VA_ARGS__);                     \
-    }                                                                       \
-}                                                                           \
-while(0)
-
-#define printf_note(mode, text, ...) do{           \
-    printf(MAKE_GREY(text), __VA_ARGS__);          \
-}                                                  \
-while(0)
-
-#define printf_abortion(mode, ...) do{                                      \
-    printf(MAKE_BOLD_RED("aborting due to error: ") __VA_ARGS__);           \
-    if (mode == on)                                                         \
-        fprintf(log_ptr, "aborting due to error: " __VA_ARGS__);            \
-}                                                                           \
 while(0)
 
 #endif

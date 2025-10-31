@@ -53,7 +53,7 @@ void fill_preamble(FILE* fp)
     fprintf(fp, "rankdir = LR;\n");
     //fprintf(fp, "splines = ortho\n");
     fprintf(fp, "bgcolor = \"#DBD9DB\"\n");
-    fprintf(fp, "node[style = \"filled\", fillcolor = \"red\", fontcolor = \"white\"]\n");
+    fprintf(fp, "node[shape = doubleoctagon, style = \"filled\", fillcolor = \"red\", fontcolor = \"white\"]\n");
 }
 
 
@@ -89,13 +89,13 @@ void put_pointers(FILE* fp, const lst* list)
     assert(fp != NULL);
     assert(fp != NULL);
 
-    fprintf(fp, "HEAD [shape = egg; label = \"head_pos\"; fontcolor = \"black\"; fillcolor = \"#FAA18F \"]\n");
+    fprintf(fp, "HEAD [shape = invhouse; label = \"head\"; fontcolor = \"black\"; fillcolor = \"#FAA18F \"]\n");
     fprintf(fp, "{rank = same; HEAD; %zd}\n\n", list->next[0]);
 
-    fprintf(fp, "TAIL [shape = egg; label = \"tail_pos\"; fillcolor = \"#D5486B\"]\n");
+    fprintf(fp, "TAIL [shape = invhouse; label = \"tail\"; fillcolor = \"#D5486B\"]\n");
     fprintf(fp, "{rank = same; TAIL; %zd}\n\n", list->prev[0]);
 
-    fprintf(fp, "FREE [shape = egg; label = \"free_pos\"; fillcolor = \"#45503B\"; fontcolor = \"white\"]\n");
+    fprintf(fp, "FREE [shape = invhouse; label = \"free\"; fillcolor = \"#45503B\"; fontcolor = \"white\"]\n");
     fprintf(fp, "{rank = same; FREE; %zd}\n\n", list->free_pos);
 }
 
