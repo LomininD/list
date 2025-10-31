@@ -1,4 +1,5 @@
 #include "list_dump.h"
+#include "assert.h"
 
 err_t verify_list(const lst* list)
 {
@@ -11,8 +12,7 @@ err_t verify_list(const lst* list)
 
 void print_dump(lst* list)
 {
-    // for (size_t i = 0; i < list->capacity; i++)
-    // {
-    //     fprintf()
-    // }
+    assert(list != NULL);
+    
+
 }

@@ -1,4 +1,5 @@
 #include "list_functions.h"
+#include "image_generator.h"
 #include <assert.h>
 
 
@@ -27,7 +28,7 @@ err_t list_ctor(lst* list, size_t capacity)
     list->size = 0;
     //list->current_pos = 0;
 
-    printf("list_ctor: initialization completed\n");
+    printf_log_msg(debug_mode, "list_ctor: initialization completed\n");
     return ok;
 }
 
@@ -45,6 +46,8 @@ err_t allocate_list_memory(lst* list, size_t capacity)
 
     //extern md_t debug_mode;
     md_t debug_mode = list->debug_mode;
+
+    printf_log_msg(debug_mode, "allocate_list_memory: began memory allocation\n");
     
     list->data = (lst_t*) calloc(capacity + 1, sizeof(lst_t));
     list->next = (ssize_t*) calloc(capacity + 1, sizeof(ssize_t));
@@ -52,7 +55,7 @@ err_t allocate_list_memory(lst* list, size_t capacity)
 
     if (list->data == NULL || list->next == NULL || list->prev == NULL)
     {
-        printf_err(debug_mode, "[%s:%d] -> allocate_list_memory: could not allocate memory\n", __FILE__, __LINE__);
+        printf_err(debug_mode, "from list [%s:%d] -> allocate_list_memory: could not allocate memory\n", __FILE__, __LINE__);
         list->err_stat = error;
         return error;
     }
@@ -71,6 +74,68 @@ err_t allocate_list_memory(lst* list, size_t capacity)
     list->prev[0] = 0;
     list->next[list->capacity] = 0;
 
+    printf_log_msg(debug_mode, "allocate_list_memory: done memory allocation\n");
+
+    return ok;
+}
+
+
+err_t reallocate_list_memory(lst* list)
+{
+    assert(list != NULL);
+
+    md_t debug_mode = list->debug_mode;
+
+    printf_log_msg(debug_mode, "reallocate_list_memory: began memory reallocation\n");
+
+    size_t prev_capacity = list->capacity;
+
+    if (list->capacity < 10)
+        list->capacity = 10;
+    
+    list->capacity *= 2;
+    printf_log_msg(debug_mode, "previous capacity = %zu, new capacity = %zu\n", prev_capacity, list->capacity);
+
+    printf_log_msg(debug_mode, "old data: %p\n", list->data);
+    printf_log_msg(debug_mode, "old next: %p\n", list->next);
+    printf_log_msg(debug_mode, "old prev: %p\n", list->prev);
+
+    lst_t* new_data = (lst_t*) realloc(list->data, (list->capacity + 1) * sizeof(lst_t));
+    ssize_t* new_next = (ssize_t*) realloc(list->next, (list->capacity + 1) * sizeof(ssize_t));
+    ssize_t* new_prev = (ssize_t*) realloc(list->prev, (list->capacity + 1) * sizeof(ssize_t));
+
+    printf_log_msg(debug_mode, "new data: %p\n", new_data);
+    printf_log_msg(debug_mode, "new next: %p\n", new_next);
+    printf_log_msg(debug_mode, "new prev: %p\n", new_prev);
+
+    if (new_data == NULL || new_next == NULL || new_prev == NULL)
+    {
+        printf_err(debug_mode, "from list [%s:%d] -> reallocate_list_memory: could not reallocate memory\n", __FILE__, __LINE__);
+        list->err_stat = error;
+        return error;
+    }
+
+    list->data = new_data;
+    list->next = new_next;
+    list->prev = new_prev;
+
+    for (size_t i = prev_capacity + 1; i < list->capacity + 1; i++)
+    {
+        list->data[i] = poison_value;
+        list->prev[i] = -1;
+
+        if (i == list->capacity) 
+            list->next[i] = 0;
+        else
+            list->next[i] = (ssize_t) i + 1;
+    }
+
+    list->next[list->capacity] = 0;
+
+    list->free_pos = (ssize_t) prev_capacity + 1;
+
+    printf_log_msg(debug_mode, "reallocate_list_memory: done memory reallocation\n");
+    printf("ok\n");
     return ok;
 }
 
@@ -83,14 +148,19 @@ ssize_t insert_after(lst* list, ssize_t pos, lst_t el) // TODO - check if list i
     md_t debug_mode = list->debug_mode;
 
     printf_log_msg(debug_mode, "insert_after: began insertion of %d after index %zd\n", el, pos);
+    printf_log_msg(debug_mode, "capacity = %zu, size = %zu\n", list->capacity, list->size);
 
     if (pos != 0 && (pos < 0 || pos > (ssize_t) list->capacity || list->data[pos] == poison_value))
     {
         list->err_stat = error;
-        printf_err(debug_mode, "[%s:%d] -> insert_after: could not insert after not existing element\n", __FILE__, __LINE__);
+        printf_err(debug_mode, "from list [%s:%d] -> insert_after: could not insert after not existing element\n", __FILE__, __LINE__);
         return -1;
     }
 
+    if (list->size == list->capacity)
+        if (reallocate_list_memory(list) != ok)
+            return error;
+    
     ssize_t insertion_pos = list->free_pos;
     
     list->free_pos = list->next[list->free_pos];
@@ -115,12 +185,12 @@ ssize_t insert_before(lst* list, ssize_t pos, lst_t el) // TODO - check if list 
     md_t debug_mode = list->debug_mode;
 
     printf_log_msg(debug_mode, "insert_before: began insertion of %d before index %zd\n", el, pos);
-    printf("pos = %zd\n", pos);
+    printf_log_msg(debug_mode, "capacity = %zu, size = %zu\n", list->capacity, list->size);
 
     if (pos <= 0 || pos > (ssize_t) list->capacity || list->data[pos] == poison_value)
     {
         list->err_stat = error;
-        printf_err(debug_mode, "[%s:%d] -> insert_before: could not insert before not existing element\n", __FILE__, __LINE__);
+        printf_err(debug_mode, "from list [%s:%d] -> insert_before: could not insert before not existing element\n", __FILE__, __LINE__);
         return -1;
     }
 
@@ -152,7 +222,7 @@ err_t delete_ind(lst* list, ssize_t pos)
     if (pos <= 0 || pos > (ssize_t) list->capacity || list->data[pos] == poison_value)
     {
         list->err_stat = error;
-        printf_err(debug_mode, "[%s:%d] -> delete_ind: could not delete not existing element\n", __FILE__, __LINE__);
+        printf_err(debug_mode, "from list [%s:%d] -> delete_ind: could not delete not existing element\n", __FILE__, __LINE__);
         return error;
     }
 
@@ -169,6 +239,21 @@ err_t delete_ind(lst* list, ssize_t pos)
     return ok;
 }
 
+
+size_t get_list_size(lst* list)
+{
+    assert(list != NULL);
+
+    return list->size;
+}
+
+
+size_t get_list_capacity(lst* list)
+{
+    assert(list != NULL);
+
+    return list->capacity;
+}
 
 
 void list_dtor(lst* list)

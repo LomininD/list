@@ -21,19 +21,55 @@ int main()
 
     generate_dump_image(&list);
 
-    insert_before(&list, 1, 10);
+    insert_after(&list, 1, 20);
 
     generate_dump_image(&list);
 
-    insert_after(&list, 0, 10);
+    insert_after(&list, 2, 30);
 
     generate_dump_image(&list);
 
-    insert_before(&list, 1, 10);
+    insert_after(&list, 3, 40);
 
     generate_dump_image(&list);
 
-    delete_ind(&list, 1);
+    // delete_ind(&list, 1);
+
+    // generate_dump_image(&list);
+
+    insert_after(&list, 4, 50);
+
+    generate_dump_image(&list);
+
+    insert_after(&list, 5, 60);
+
+    generate_dump_image(&list);
+
+    insert_after(&list, 6, 70);
+
+    generate_dump_image(&list);
+
+    insert_after(&list, 7, 80);
+
+    generate_dump_image(&list);
+
+    insert_after(&list, 8, 90);
+
+    generate_dump_image(&list);
+
+    insert_after(&list, 9, 100);
+
+    generate_dump_image(&list);
+
+    insert_after(&list, 10, 110);
+
+    generate_dump_image(&list);
+
+    insert_after(&list, 11, 120);
+
+    generate_dump_image(&list);
+
+    insert_after(&list, 12, 130);
 
     generate_dump_image(&list);
 
