@@ -28,7 +28,7 @@ void generate_dump_image(const lst* list)
 
     convert_to_image(code_file_name, image_file_name);
 
-    printf_log_msg(list->debug_mode, "\n\n <img src=\"%s\"> \n\n", image_file_name);
+    printf_log_only(list->debug_mode, "\n\n <img src=\"%s\"> \n\n", image_file_name);
 }
 
 

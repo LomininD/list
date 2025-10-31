@@ -31,6 +31,14 @@ enum md_t
 }                                               \
 while(0)
 
+#define printf_log_only(mode, ...) do{          \
+    if (mode == on)                             \
+    {                                           \
+        fprintf(log_ptr, __VA_ARGS__);          \
+    }                                           \
+}                                               \
+while(0)
+
 #define printf_log_grey(mode, text, ...) do{                                \
     if (mode == on)                                                         \
     {                                                                       \

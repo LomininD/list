@@ -34,8 +34,8 @@ err_t list_ctor(lst* list, ssize_t capacity)
 
 void initialize_log(md_t debug_mode)
 {
-    printf_log_msg(debug_mode, "<pre>\n");
-    printf_log_msg(debug_mode, "<h3> +++ LIST LOG +++ </h3>\n");
+    printf_log_only(debug_mode, "<pre>\n");
+    printf_log_only(debug_mode, "<h3> +++ LIST LOG +++ </h3>\n");
 }
 
 
@@ -82,8 +82,7 @@ ssize_t insert_after(lst* list, ssize_t pos, lst_t el) // TODO - check if list i
     //extern md_t debug_mode;
     md_t debug_mode = list->debug_mode;
 
-    printf_log_msg(debug_mode, "insert_after: began insertion of %d after position %zd\n", el, pos);
-    printf("pos = %zd\n", pos);
+    printf_log_msg(debug_mode, "insert_after: began insertion of %d after index %zd\n", el, pos);
 
     if (pos != 0 && (pos < 0 || pos > list->capacity || list->data[pos] == poison_value))
     {
@@ -115,7 +114,7 @@ ssize_t insert_before(lst* list, ssize_t pos, lst_t el) // TODO - check if list 
     //extern md_t debug_mode;
     md_t debug_mode = list->debug_mode;
 
-    printf_log_msg(debug_mode, "insert_before: began insertion of %d before position %zd\n", el, pos);
+    printf_log_msg(debug_mode, "insert_before: began insertion of %d before index %zd\n", el, pos);
     printf("pos = %zd\n", pos);
 
     if (pos <= 0 || pos > list->capacity || list->data[pos] == poison_value)
@@ -148,7 +147,7 @@ err_t delete_ind(lst* list, ssize_t pos)
 
     md_t debug_mode = list->debug_mode;
 
-    printf_log_msg(debug_mode, "delete_ind: began deleting element on position %zd\n", pos);
+    printf_log_msg(debug_mode, "delete_ind: began deleting element on index %zd\n", pos);
 
     if (pos <= 0 || pos > list->capacity || list->data[pos] == poison_value)
     {
