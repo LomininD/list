@@ -6,36 +6,22 @@
 int main()
 {
     lst list = {};
-
-    list.debug_mode = on;
-
-    if (list.debug_mode == on)
-    {
+    set_list_debug_mode(&list, on);
+    if (get_list_debug_mode(&list) == on)
         log_ptr = fopen("list_log.html", "w");
-    }
     
     list_ctor(&list, 10);
 
-    verify_list(&list);
-
-    generate_dump_image(&list);
-
     insert_after(&list, 0, 10);
+    insert_after(&list, 0, 20);
+    print_dump(&list, diagnostic);
 
-    generate_dump_image(&list);
 
-    //list.prev[8] = 45;
-    //list.next[10] = 56;
-
-    //generate_dump_image(&list); 
-
-    for (int i = 0; i < 10; i++)
+    for (size_t i = 0; i < get_list_capacity(&list); i++)
     {
-        printf("%d: %d\n", i + 1, list.data[i + 1]);
+        printf("%d\n", list.data[i + 1]);
     }
-
     list_dtor(&list);
-
     return 0;
 }
 

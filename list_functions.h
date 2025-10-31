@@ -3,6 +3,7 @@
 
 #include "debug.h"
 #include "list_properties.h"
+#include "list_dump.h"
 
 err_t list_ctor(lst* list, size_t capacity);
 err_t allocate_list_memory(lst* list, size_t capacity);
@@ -14,8 +15,10 @@ err_t delete_ind(lst* list, ssize_t pos);
 
 size_t get_list_size(lst* list);
 size_t get_list_capacity(lst* list);
+void set_list_debug_mode(lst* list, md_t mode);
+md_t get_list_debug_mode(lst* list);
 
-void list_dtor(lst* list);
+err_t list_dtor(lst* list);
 void initialize_log(md_t debug_mode);
 
 
@@ -24,6 +27,12 @@ void initialize_log(md_t debug_mode);
         if (reallocate_list_memory(list) != ok)     \
             return error;                           \
 }                                                   \
+while(0)
+
+#define VERIFY_LIST() do{                                           \
+    if (process_verification(list) != ok)                           \
+        return error;                                               \
+}                                                                   \
 while(0)
 
 

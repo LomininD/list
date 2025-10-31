@@ -7,13 +7,10 @@ err_t list_ctor(lst* list, size_t capacity)
 {
     assert(list != NULL);
     
-    //extern md_t debug_mode;
     md_t debug_mode = list->debug_mode;
 
     if (debug_mode == on)
-    {
         initialize_log(debug_mode);
-    }
 
     printf_log_msg(debug_mode, "list_ctor: began initialization\n");
 
@@ -22,11 +19,10 @@ err_t list_ctor(lst* list, size_t capacity)
     if (allocate_list_memory(list, capacity) != ok)
         return error;
 
-    //list->head_pos = 0;
-    //list->tail_pos = 0;
     list->free_pos = 1;
     list->size = 0;
-    //list->current_pos = 0;
+
+    VERIFY_LIST();
 
     printf_log_msg(debug_mode, "list_ctor: initialization completed\n");
     return ok;
@@ -42,9 +38,6 @@ void initialize_log(md_t debug_mode)
 
 err_t allocate_list_memory(lst* list, size_t capacity)
 {
-    assert(list != NULL);
-
-    //extern md_t debug_mode;
     md_t debug_mode = list->debug_mode;
 
     printf_log_msg(debug_mode, "allocate_list_memory: began memory allocation\n");
@@ -74,6 +67,8 @@ err_t allocate_list_memory(lst* list, size_t capacity)
     list->prev[0] = 0;
     list->next[list->capacity] = 0;
 
+    VERIFY_LIST();
+
     printf_log_msg(debug_mode, "allocate_list_memory: done memory allocation\n");
 
     return ok;
@@ -82,7 +77,7 @@ err_t allocate_list_memory(lst* list, size_t capacity)
 
 err_t reallocate_list_memory(lst* list)
 {
-    assert(list != NULL);
+    VERIFY_LIST();
 
     md_t debug_mode = list->debug_mode;
 
@@ -134,6 +129,8 @@ err_t reallocate_list_memory(lst* list)
 
     list->free_pos = (ssize_t) prev_capacity + 1;
 
+    VERIFY_LIST();
+
     printf_log_msg(debug_mode, "reallocate_list_memory: done memory reallocation\n");
     printf("ok\n");
     return ok;
@@ -142,9 +139,8 @@ err_t reallocate_list_memory(lst* list)
 
 ssize_t insert_after(lst* list, ssize_t pos, lst_t el)
 {
-    assert(list != NULL);
-    
-    //extern md_t debug_mode;
+    VERIFY_LIST();
+
     md_t debug_mode = list->debug_mode;
 
     printf_log_msg(debug_mode, "insert_after: began insertion of %d after index %zd\n", el, pos);
@@ -170,14 +166,17 @@ ssize_t insert_after(lst* list, ssize_t pos, lst_t el)
     list->prev[insertion_pos] = pos;
 
     list->size++;
+
+    VERIFY_LIST();
+
     printf_log_msg(debug_mode, "insert_after: insertion finished\n");
     return insertion_pos;
 }
 
 
-ssize_t insert_before(lst* list, ssize_t pos, lst_t el) // TODO - check if list is full
+ssize_t insert_before(lst* list, ssize_t pos, lst_t el)
 {
-    assert(list != NULL);
+    VERIFY_LIST();
     
     //extern md_t debug_mode;
     md_t debug_mode = list->debug_mode;
@@ -206,6 +205,8 @@ ssize_t insert_before(lst* list, ssize_t pos, lst_t el) // TODO - check if list 
 
     list->size++;
 
+    VERIFY_LIST();
+
     printf_log_msg(debug_mode, "insert_before: insertion finished\n");
     return insertion_pos;
 }
@@ -213,7 +214,7 @@ ssize_t insert_before(lst* list, ssize_t pos, lst_t el) // TODO - check if list 
 
 err_t delete_ind(lst* list, ssize_t pos)
 {
-    assert(list != NULL);
+    VERIFY_LIST();
 
     md_t debug_mode = list->debug_mode;
 
@@ -235,6 +236,8 @@ err_t delete_ind(lst* list, ssize_t pos)
 
     list->size--;
 
+    VERIFY_LIST();
+
     printf_log_msg(debug_mode, "delete_ind: deleting finished\n");
     return ok;
 }
@@ -255,11 +258,23 @@ size_t get_list_capacity(lst* list)
     return list->capacity;
 }
 
-
-void list_dtor(lst* list)
+void set_list_debug_mode(lst* list, md_t mode)
 {
     assert(list != NULL);
 
+    list->debug_mode = mode;
+}
+
+md_t get_list_debug_mode(lst* list)
+{
+    assert(list != NULL);
+
+    return list->debug_mode;
+}
+
+
+err_t list_dtor(lst* list)
+{
     //extern md_t debug_mode;
     md_t debug_mode = list->debug_mode;
 
@@ -270,4 +285,5 @@ void list_dtor(lst* list)
     free(list->prev);
 
     printf_log_msg(debug_mode, "list_dtor: termination completed\n");
+    return ok;
 }
