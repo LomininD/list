@@ -18,4 +18,13 @@ size_t get_list_capacity(lst* list);
 void list_dtor(lst* list);
 void initialize_log(md_t debug_mode);
 
+
+#define ASSERT_CAPACITY() do{                       \
+    if (list->size == list->capacity)               \
+        if (reallocate_list_memory(list) != ok)     \
+            return error;                           \
+}                                                   \
+while(0)
+
+
 #endif

@@ -13,7 +13,8 @@ extern FILE* log_ptr;
 enum err_t
 {
     ok,
-    error
+    error,
+    no_data
 };
 
 enum md_t

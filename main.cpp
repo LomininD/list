@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "list_functions.h"
 #include "image_generator.h"
+#include "list_dump.h"
 
 int main()
 {
@@ -15,65 +16,13 @@ int main()
     
     list_ctor(&list, 10);
 
+    verify_list(&list);
+
     generate_dump_image(&list);
 
     insert_after(&list, 0, 10);
 
     generate_dump_image(&list);
-
-    insert_after(&list, 1, 20);
-
-    generate_dump_image(&list);
-
-    insert_after(&list, 2, 30);
-
-    generate_dump_image(&list);
-
-    insert_after(&list, 3, 40);
-
-    generate_dump_image(&list);
-
-    // delete_ind(&list, 1);
-
-    // generate_dump_image(&list);
-
-    insert_after(&list, 4, 50);
-
-    generate_dump_image(&list);
-
-    insert_after(&list, 5, 60);
-
-    generate_dump_image(&list);
-
-    insert_after(&list, 6, 70);
-
-    generate_dump_image(&list);
-
-    insert_after(&list, 7, 80);
-
-    generate_dump_image(&list);
-
-    insert_after(&list, 8, 90);
-
-    generate_dump_image(&list);
-
-    insert_after(&list, 9, 100);
-
-    generate_dump_image(&list);
-
-    insert_after(&list, 10, 110);
-
-    generate_dump_image(&list);
-
-    insert_after(&list, 11, 120);
-
-    generate_dump_image(&list);
-
-    insert_after(&list, 12, 130);
-
-    generate_dump_image(&list);
-
-
 
     //list.prev[8] = 45;
     //list.next[10] = 56;

@@ -140,7 +140,7 @@ err_t reallocate_list_memory(lst* list)
 }
 
 
-ssize_t insert_after(lst* list, ssize_t pos, lst_t el) // TODO - check if list is full
+ssize_t insert_after(lst* list, ssize_t pos, lst_t el)
 {
     assert(list != NULL);
     
@@ -157,9 +157,7 @@ ssize_t insert_after(lst* list, ssize_t pos, lst_t el) // TODO - check if list i
         return -1;
     }
 
-    if (list->size == list->capacity)
-        if (reallocate_list_memory(list) != ok)
-            return error;
+    ASSERT_CAPACITY();
     
     ssize_t insertion_pos = list->free_pos;
     
@@ -193,6 +191,8 @@ ssize_t insert_before(lst* list, ssize_t pos, lst_t el) // TODO - check if list 
         printf_err(debug_mode, "from list [%s:%d] -> insert_before: could not insert before not existing element\n", __FILE__, __LINE__);
         return -1;
     }
+
+    ASSERT_CAPACITY();
 
     ssize_t insertion_pos = list->free_pos;
     
