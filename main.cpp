@@ -49,16 +49,6 @@ int main()
         printf("%d: %d\n", i + 1, list.data[i + 1]);
     }
 
-//     for (int i = 0; i < 11; i++)
-//     {
-//         printf("%d: %zd\n", i, list.next[i]);
-//     }
-// 
-//     for (int i = 0; i < 11; i++)
-//     {
-//         printf("%d: %zd\n", i, list.prev[i]);
-//     }
-
     list_dtor(&list);
 
     return 0;

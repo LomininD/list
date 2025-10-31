@@ -13,10 +13,10 @@ struct lst
     lst_t* data;
     ssize_t* next;
     ssize_t* prev;
-    
-    ssize_t capacity;
     ssize_t free_pos;
-    ssize_t size;
+    
+    size_t capacity;
+    size_t size;
 
     err_t err_stat;
     md_t debug_mode;

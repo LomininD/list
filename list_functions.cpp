@@ -2,7 +2,7 @@
 #include <assert.h>
 
 
-err_t list_ctor(lst* list, ssize_t capacity)
+err_t list_ctor(lst* list, size_t capacity)
 {
     assert(list != NULL);
     
@@ -39,16 +39,16 @@ void initialize_log(md_t debug_mode)
 }
 
 
-err_t allocate_list_memory(lst* list, ssize_t capacity)
+err_t allocate_list_memory(lst* list, size_t capacity)
 {
     assert(list != NULL);
 
     //extern md_t debug_mode;
     md_t debug_mode = list->debug_mode;
     
-    list->data = (lst_t*) calloc((size_t) capacity + 1, sizeof(lst_t));
-    list->next = (ssize_t*) calloc((size_t) capacity + 1, sizeof(ssize_t));
-    list->prev = (ssize_t*) calloc((size_t) capacity + 1, sizeof(ssize_t));
+    list->data = (lst_t*) calloc(capacity + 1, sizeof(lst_t));
+    list->next = (ssize_t*) calloc(capacity + 1, sizeof(ssize_t));
+    list->prev = (ssize_t*) calloc(capacity + 1, sizeof(ssize_t));
 
     if (list->data == NULL || list->next == NULL || list->prev == NULL)
     {
@@ -57,7 +57,7 @@ err_t allocate_list_memory(lst* list, ssize_t capacity)
         return error;
     }
 
-    for (ssize_t i = 0; i < capacity + 1; i++)
+    for (size_t i = 0; i < capacity + 1; i++)
     {
         list->data[i] = poison_value;
         list->prev[i] = -1;
@@ -65,7 +65,7 @@ err_t allocate_list_memory(lst* list, ssize_t capacity)
         if (i == capacity or i == 0) 
             list->next[i] = 0;
         else
-            list->next[i] = i + 1;
+            list->next[i] = (ssize_t) i + 1;
     }
 
     list->prev[0] = 0;
@@ -84,7 +84,7 @@ ssize_t insert_after(lst* list, ssize_t pos, lst_t el) // TODO - check if list i
 
     printf_log_msg(debug_mode, "insert_after: began insertion of %d after index %zd\n", el, pos);
 
-    if (pos != 0 && (pos < 0 || pos > list->capacity || list->data[pos] == poison_value))
+    if (pos != 0 && (pos < 0 || pos > (ssize_t) list->capacity || list->data[pos] == poison_value))
     {
         list->err_stat = error;
         printf_err(debug_mode, "[%s:%d] -> insert_after: could not insert after not existing element\n", __FILE__, __LINE__);
@@ -117,7 +117,7 @@ ssize_t insert_before(lst* list, ssize_t pos, lst_t el) // TODO - check if list 
     printf_log_msg(debug_mode, "insert_before: began insertion of %d before index %zd\n", el, pos);
     printf("pos = %zd\n", pos);
 
-    if (pos <= 0 || pos > list->capacity || list->data[pos] == poison_value)
+    if (pos <= 0 || pos > (ssize_t) list->capacity || list->data[pos] == poison_value)
     {
         list->err_stat = error;
         printf_err(debug_mode, "[%s:%d] -> insert_before: could not insert before not existing element\n", __FILE__, __LINE__);
@@ -149,7 +149,7 @@ err_t delete_ind(lst* list, ssize_t pos)
 
     printf_log_msg(debug_mode, "delete_ind: began deleting element on index %zd\n", pos);
 
-    if (pos <= 0 || pos > list->capacity || list->data[pos] == poison_value)
+    if (pos <= 0 || pos > (ssize_t) list->capacity || list->data[pos] == poison_value)
     {
         list->err_stat = error;
         printf_err(debug_mode, "[%s:%d] -> delete_ind: could not delete not existing element\n", __FILE__, __LINE__);

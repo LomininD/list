@@ -4,8 +4,8 @@
 #include "debug.h"
 #include "list_properties.h"
 
-err_t list_ctor(lst* list, ssize_t capacity);
-err_t allocate_list_memory(lst* list, ssize_t capacity);
+err_t list_ctor(lst* list, size_t capacity);
+err_t allocate_list_memory(lst* list, size_t capacity);
 ssize_t insert_after(lst* list, ssize_t pos, lst_t el);
 ssize_t insert_before(lst* list, ssize_t pos, lst_t el);
 err_t delete_ind(lst* list, ssize_t pos);
