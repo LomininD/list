@@ -51,7 +51,9 @@ err_t verify_list(const lst* list)
         found_errors = true;
     }
 
-    if (check_connections(list, list->next) != ok || check_connections(list, list->prev) != ok)
+    err_t next_ok = check_connections(list, list->next);
+    err_t prev_ok = check_connections(list, list->prev);
+    if (next_ok != ok || prev_ok != ok)
         found_errors = true;
 
     if (found_errors)
@@ -65,19 +67,19 @@ err_t process_verification(const lst* list)
     err_t verified = verify_list(list);
     if (verified == no_data)
     {
-        printf(MAKE_BOLD_RED("verification failed")
+        printf(MAKE_BOLD_RED("\nverification failed")
         ", not enough data to provide additional information\n");
         return error;  
     }   
     else if (verified == error)
     {                                                               
-        printf(MAKE_BOLD_RED("verification failed\n"));             
+        printf(MAKE_BOLD_RED("\nverification failed\n"));             
         print_dump(list, program_failure);                          
         return error;                                               
     }                                                               
     else                                                            
     {                                                               
-        printf_log_msg(list->debug_mode, "verification passed\n");  
+        printf_log_msg(list->debug_mode, "\nverification passed\n");  
         return ok;
     }      
 }

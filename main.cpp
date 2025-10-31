@@ -13,7 +13,18 @@ int main()
     list_ctor(&list, 10);
 
     insert_after(&list, 0, 10);
-    insert_after(&list, 0, 20);
+    insert_after(&list, 1, 20);
+    insert_after(&list, 2, 30);
+    insert_after(&list, 3, 40);
+    insert_after(&list, 4, 500);
+    insert_after(&list, 5, 600);
+    insert_after(&list, 6, 700);
+    insert_after(&list, 7, 800);
+
+    list.next[7] = 5;
+    list.prev[6] = 300;
+
+    insert_after(&list, 8, 900);
     print_dump(&list, diagnostic);
 
 

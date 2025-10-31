@@ -53,7 +53,7 @@ void fill_preamble(FILE* fp)
     fprintf(fp, "rankdir = LR;\n");
     //fprintf(fp, "splines = ortho\n");
     fprintf(fp, "bgcolor = \"#DBD9DB\"\n");
-    fprintf(fp, "node[style = \"filled\", fillcolor = \"red\", textcolor = \"white\"]\n");
+    fprintf(fp, "node[style = \"filled\", fillcolor = \"red\", fontcolor = \"white\"]\n");
 }
 
 
@@ -69,11 +69,11 @@ void list_items(FILE* fp, const lst* list)
     {
         if (list->data[i] == poison_value)
             fprintf(fp, "%zu [rank = %zu, label = \"ind = %zu | value = %x | { prev = %zd | next = %zd }\", \
-                                   shape = Mrecord, style = filled, fillcolor = \"#C0C0C0\"]\n", i, i, i, \
+                                   shape = Mrecord, style = filled, fillcolor = \"#C0C0C0\", fontcolor = \"black\"]\n", i, i, i, \
                                                                 list->data[i], list->prev[i], list->next[i]);
         else
             fprintf(fp, "%zu [rank = %zu, label = \"ind = %zu | value = %d | { prev = %zd | next = %zd }\", \
-                                   shape = Mrecord, style = filled, fillcolor = \"#C0C0C0\"]\n", i, i, i, \
+                                   shape = Mrecord, style = filled, fillcolor = \"#C0C0C0\", fontcolor = \"black\"]\n", i, i, i, \
                                                                 list->data[i], list->prev[i], list->next[i]);
     }
     
@@ -89,7 +89,7 @@ void put_pointers(FILE* fp, const lst* list)
     assert(fp != NULL);
     assert(fp != NULL);
 
-    fprintf(fp, "HEAD [shape = egg; label = \"head_pos\"; fillcolor = \"#FAA18F \"]\n");
+    fprintf(fp, "HEAD [shape = egg; label = \"head_pos\"; fontcolor = \"black\"; fillcolor = \"#FAA18F \"]\n");
     fprintf(fp, "{rank = same; HEAD; %zd}\n\n", list->next[0]);
 
     fprintf(fp, "TAIL [shape = egg; label = \"tail_pos\"; fillcolor = \"#D5486B\"]\n");
@@ -106,7 +106,7 @@ void draw_arrows(FILE* fp, const lst* list)
     assert(list != NULL);
 
     fprintf(fp, "{\n");
-    fprintf(fp, "edge[color = \"#45503B\", weight = 0]\n");
+    fprintf(fp, "edge[color = \"#45503B\", weight = 0, penwidth = 1]\n");
     
     for (size_t i = 0; i < list->capacity; i++)
     {
@@ -117,14 +117,14 @@ void draw_arrows(FILE* fp, const lst* list)
     fprintf(fp, "}\n\n");
 
     fprintf(fp, "{\n");
-    fprintf(fp, "edge[color = \"#FAA18F\", weight = 0]\n");
+    fprintf(fp, "edge[color = \"#FAA18F\", weight = 0, penwidth = 1]\n");
 
     connect_nodes(fp, list, ltor);
 
     fprintf(fp, "}\n\n");
 
     fprintf(fp, "{\n");
-    fprintf(fp, "edge[color = \"#D5486B\", weight = 0]\n");
+    fprintf(fp, "edge[color = \"#D5486B\", weight = 0, penwidth = 1]\n");
     
     connect_nodes(fp, list, rtol);
 
@@ -163,6 +163,11 @@ void connect_nodes(FILE* fp, const lst* list, directions dir)
                         continue;
                     }
                 }
+            }
+            else
+            {
+                fprintf(fp, "%zu->%zd\n [color = \"red\", penwidth = 3]", i, arr[i]);
+                continue;
             }
             fprintf(fp, "%zu->%zd\n", i, arr[i]);
         }
