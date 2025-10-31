@@ -1,11 +1,11 @@
+FRIDAY 
+
+// TODO - make verificator and dump disableable
+// TODO - combine insert
 
 
 --QUESTIONS--
-// TODO - ask about comments
-// TODO - ask about spaces in code style
-
-// TODO - push_before
-// TODO - 
+// TODO - why fprintf requires FILE* but not const FILE*
 
 --TO READ--
 // TODO - read about dynamic memory in kernigan 

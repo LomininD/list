@@ -73,7 +73,7 @@ void list_items(FILE* fp, const lst* list)
                                                                 list->data[i], list->prev[i], list->next[i]);
         else
             fprintf(fp, "%zu [rank = %zu, label = \"ind = %zu | value = %d | { prev = %zd | next = %zd }\", \
-                                   shape = Mrecord, style = filled, fillcolor = \"#C0C0C0\", fontcolor = \"black\"]\n", i, i, i, \
+                                   shape = Mrecord, style = filled, fillcolor = \"#D6E8A1\", fontcolor = \"black\"]\n", i, i, i, \
                                                                 list->data[i], list->prev[i], list->next[i]);
     }
     

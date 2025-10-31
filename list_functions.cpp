@@ -8,7 +8,11 @@ static err_t reallocate_list_memory(lst* list);
 
 err_t list_ctor(lst* list, size_t capacity)
 {
-    assert(list != NULL);
+    if (list == NULL)
+    {
+        printf(MAKE_BOLD_RED("ERROR: ") "[from list_ctor] -> list not found\n");
+        return error;
+    }
     
     md_t debug_mode = list->debug_mode;
 
@@ -257,7 +261,11 @@ err_t delete_ind(lst* list, ssize_t pos)
 
 size_t get_list_size(lst* list)
 {
-    assert(list != NULL);
+    if (list == NULL)
+    {
+        printf(MAKE_BOLD_RED("ERROR: ") "[from list_ctor] -> list not found\n");
+        return 0;
+    }
 
     return list->size;
 }
@@ -265,21 +273,33 @@ size_t get_list_size(lst* list)
 
 size_t get_list_capacity(lst* list)
 {
-    assert(list != NULL);
+    if (list == NULL)
+    {
+        printf(MAKE_BOLD_RED("ERROR: ") "[from list_ctor] -> list not found\n");
+        return 0;
+    }
 
     return list->capacity;
 }
 
 void set_list_debug_mode(lst* list, md_t mode)
 {
-    assert(list != NULL);
+    if (list == NULL)
+    {
+        printf(MAKE_BOLD_RED("ERROR: ") "[from list_ctor] -> list not found\n");
+        return;
+    }
 
     list->debug_mode = mode;
 }
 
 md_t get_list_debug_mode(lst* list)
 {
-    assert(list != NULL);
+    if (list == NULL)
+    {
+        printf(MAKE_BOLD_RED("ERROR: ") "[from list_ctor] -> list not found\n");
+        return on;
+    }
 
     return list->debug_mode;
 }
@@ -287,6 +307,12 @@ md_t get_list_debug_mode(lst* list)
 
 err_t list_dtor(lst* list)
 {
+    if (list == NULL)
+    {
+        printf(MAKE_BOLD_RED("ERROR: ") "[from list_ctor] -> list not found\n");
+        return error;
+    }
+    
     //extern md_t debug_mode;
     md_t debug_mode = list->debug_mode;
 

@@ -157,7 +157,7 @@ void print_dump(const lst* list, dump_purpose purpose)
         printf_log_msg(debug_mode, "\n");
     }
 
-    printf_log_bold(debug_mode, "\n==========================================================================\n\n", NULL);
+    printf_log_bold(debug_mode, "\n===========================================================================\n\n", NULL);
 
     generate_dump_image(list);
 }
