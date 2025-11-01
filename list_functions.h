@@ -5,6 +5,8 @@
 #include "list_properties.h"
 #include "list_dump.h"
 
+void initialize_list_log(md_t debug_mode);
+
 err_t list_ctor(lst* list, size_t capacity);
 
 ssize_t insert_after(lst* list, ssize_t pos, lst_t el);
@@ -17,9 +19,14 @@ void set_list_debug_mode(lst* list, md_t mode);
 void set_list_verification(lst* list, md_t mode);
 md_t get_list_debug_mode(lst* list);
 
-
 err_t list_dtor(lst* list);
-void initialize_log(md_t debug_mode);
+
+
+vanilla_list* create_vlist(lst_t value, md_t debug_mode, md_t verification);
+vanilla_list* vlist_insert_after(vanilla_list* el, lst_t value);
+vanilla_list* vlist_insert_before(vanilla_list* el, lst_t value);
+void destroy_vlist(vanilla_list* vlist);
+
 
 
 #define ASSERT_CAPACITY() do{                       \
@@ -39,6 +46,12 @@ while(0)
 #define DISPLAY_LIST() do{                                          \
     if (debug_mode == on)                                           \
         generate_dump_image(list);                                  \
+}                                                                   \
+while(0)
+
+#define DISPLAY_VLIST() do{                                         \
+    if (debug_mode == on)                                           \
+        vlist_generate_dump_image(el);                              \
 }                                                                   \
 while(0)
 

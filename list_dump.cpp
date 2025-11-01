@@ -215,3 +215,8 @@ void put_number(ssize_t number, md_t debug_mode)
     
     printf_log_msg(debug_mode, "%s", str);
 }
+
+// VLIST VERIFIER
+// check for each element:
+// - if data is not poisoned
+// - if next and prev elements are ok

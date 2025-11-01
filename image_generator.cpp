@@ -173,3 +173,60 @@ void connect_nodes(FILE* fp, const lst* list, directions dir)
         }
     }
 }
+
+
+void vlist_generate_dump_image(const vanilla_list* vlist)
+{
+    static unsigned long long image_count = 0; // size_t?
+
+    char code_file_name[file_name_size] = {};
+    char image_file_name[file_name_size] = {};
+    snprintf(code_file_name, file_name_size, IMAGE_CODE_PATH "%llu." IMAGE_CODE_EXT, image_count);
+    snprintf(image_file_name, file_name_size, IMAGE_PATH "%llu." IMAGE_EXT, image_count);
+
+    FILE* fp = fopen(code_file_name, "w");
+
+    fprintf(fp, "digraph G\n");
+    fprintf(fp, "{\n");
+
+    fill_preamble(fp);
+    vlist_list_items(fp, vlist);
+
+    fprintf(fp, "}\n");
+
+    fclose(fp);
+    image_count++;
+
+    convert_to_image(code_file_name, image_file_name);
+
+    printf_log_only(vlist->debug_mode, "\n\n <img src=\"%s\"> \n\n", image_file_name);
+}
+
+
+void vlist_list_items(FILE* fp, const vanilla_list* vlist)
+{
+    assert(fp != NULL);
+    assert(vlist != NULL);
+
+    fprintf(fp, "{\n");
+    fprintf(fp, "edge[color=\"#FAA18F\", weight = 100, len = 0, dir = both]\n");
+
+    vanilla_list* current_element = (vanilla_list*) vlist;
+    size_t i = 0;
+
+    while (current_element != NULL)
+    {
+        fprintf(fp, "%zu [label = \"ptr = %p | value = %d | { prev = %p | next = %p }\", \
+                            shape = Mrecord, style = filled, fillcolor = \"#C0C0C0\", fontcolor = \"black\"]\n", i, \
+                                        current_element, current_element->data, current_element->prev, current_element->next);
+        
+        if (i != 0)
+            fprintf(fp, "%zu->%zu\n", i-1, i);
+
+        current_element = current_element->next;
+        i++;
+    }
+    
+
+    fprintf(fp, "}\n\n");
+}

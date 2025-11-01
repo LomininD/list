@@ -5,13 +5,16 @@
 
 int main()
 {
+    
+    /*
+    
     lst list = {};
 
     set_list_debug_mode(&list, on);
     set_list_verification(&list, off);
 
     if (get_list_debug_mode(&list) == on)
-        log_ptr = fopen("list_log.html", "w");
+        initialize_list_log(on);
     
     list_ctor(&list, 10);
 
@@ -76,6 +79,21 @@ int main()
         printf("%d\n", list.data[i + 1]);
     }
     list_dtor(&list);
+    
+    */
+
+    md_t debug_mode = on;
+    md_t verification_mode = on;
+
+    initialize_list_log(debug_mode);
+
+    vanilla_list* el = create_vlist(10, debug_mode, verification_mode);
+    vanilla_list* anchor_el = vlist_insert_after(el, 52);
+    for (int i = 0; i <= 10; i++)
+        vlist_insert_before(anchor_el, i);
+    
+    destroy_vlist(el);
+
     return 0;
 }
 

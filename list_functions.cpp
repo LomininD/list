@@ -5,6 +5,9 @@
 static err_t allocate_list_memory(lst* list, size_t capacity);
 static err_t reallocate_list_memory(lst* list);
 
+static vanilla_list* create_vlist_element(md_t debug_mode, md_t verification);
+// static void destroy_vlist_element(vanilla_list* vlist);
+
 
 err_t list_ctor(lst* list, size_t capacity)
 {
@@ -15,9 +18,6 @@ err_t list_ctor(lst* list, size_t capacity)
     }
     
     md_t debug_mode = list->debug_mode;
-
-    if (debug_mode == on)
-        initialize_log(debug_mode);
 
     printf_log_msg(debug_mode, "list_ctor: began initialization\n");
 
@@ -36,8 +36,9 @@ err_t list_ctor(lst* list, size_t capacity)
 }
 
 
-void initialize_log(md_t debug_mode)
+void initialize_list_log(md_t debug_mode)
 {
+    log_ptr = fopen("list_log.html", "w");
     printf_log_only(debug_mode, "<pre>\n");
     printf_log_only(debug_mode, "<h3> +++ LIST LOG +++ </h3>\n");
 }
@@ -334,3 +335,119 @@ err_t list_dtor(lst* list)
     printf_log_msg(debug_mode, "list_dtor: termination completed\n");
     return ok;
 }
+
+
+vanilla_list* create_vlist_element(md_t debug_mode, md_t verification)
+{
+    printf_log_msg(debug_mode, "create_vlist_ptr: began allocating memory for new element\n");
+    
+    vanilla_list* new_el_ptr = (vanilla_list*) calloc(1, sizeof(vanilla_list));
+
+    if (new_el_ptr == NULL)
+    {
+        printf_err(debug_mode, "[from create_vlist_ptr] -> failed to allocate memory for vanilla list element\n");
+        return NULL;
+    }
+
+    new_el_ptr->debug_mode = debug_mode;
+    new_el_ptr->debug_mode = verification;
+    new_el_ptr->data = poison_value;
+    new_el_ptr->prev = NULL;
+    new_el_ptr->next = NULL;
+
+    printf_log_msg(debug_mode, "create_vlist_ptr: done allocating memory for new element [%p]\n", new_el_ptr);
+    
+    return new_el_ptr;
+}
+
+
+vanilla_list* create_vlist(lst_t value, md_t debug_mode, md_t verification)
+{
+    printf_log_msg(debug_mode, "create_vlist: began creating vlist\n");
+
+    vanilla_list* el = create_vlist_element(debug_mode, verification);
+
+    if (el == NULL)
+        return NULL;
+
+    el->data = value;
+
+    printf_log_msg(debug_mode, "create_vlist: vlist created [%p]\n", el);
+
+    DISPLAY_VLIST();
+
+    return el;
+}
+
+
+vanilla_list* vlist_insert_after(vanilla_list* el, lst_t value)
+{
+    // verifier
+
+    md_t debug_mode = el->debug_mode;
+
+    printf_log_msg(debug_mode, "vlist_insert_after: began insertion after vlist element [%p]\n", el);
+
+    vanilla_list* new_el = create_vlist_element(debug_mode, el->verification);
+
+    if (new_el == NULL)
+        return NULL;
+
+    if (el->next != NULL)
+        (el->next)->prev = new_el;
+
+    new_el->data = value;
+    new_el->next = el->next;
+    new_el->prev = el;
+    el->next = new_el;
+
+    printf_log_msg(debug_mode, "vlist_insert_after: inserted element [%p]\n", new_el);
+
+    DISPLAY_VLIST();
+
+    return new_el;
+}
+
+
+vanilla_list* vlist_insert_before(vanilla_list* el, lst_t value) // FIXME - smth wrong with debug_mode, wouldnt work for 1 el
+{
+    // verifier
+
+    md_t debug_mode = el->debug_mode;
+
+    printf("%d\n", debug_mode);
+
+    printf_log_msg(debug_mode, "vlist_insert_before: began insertion before vlist element [%p]\n", el);
+    printf_log_msg(debug_mode, "vlist_insert_before: redirecting function call to vlist_insert_after [%p]\n", el->prev);
+
+    vanilla_list* new_el = vlist_insert_after(el->prev, value);
+
+    printf_log_msg(debug_mode, "vlist_insert_before: inserted element [%p]\n", new_el);
+
+    return new_el;
+}
+
+
+void destroy_vlist(vanilla_list* vlist)
+{
+    // verifier 
+    
+    md_t debug_mode = vlist->debug_mode;
+
+    printf_log_msg(debug_mode, "destroy_vlist: began destruction of vanilla list\n");
+     
+    vanilla_list* current_el = vlist;
+    vanilla_list* next_el = NULL;
+
+    while(current_el != NULL)
+    {
+        next_el = current_el->next;
+        printf_log_msg(debug_mode, "destroy_vlist: deleting [%p]\n", current_el);
+        free(current_el);
+        current_el = next_el;
+    }
+
+    printf_log_msg(debug_mode, "destroy_vlist: done destruction of vanilla list\n");
+}
+
+

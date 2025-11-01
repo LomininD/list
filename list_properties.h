@@ -23,4 +23,15 @@ struct lst
     md_t verification;
 };
 
+
+struct vanilla_list
+{
+    vanilla_list* prev;
+    vanilla_list* next;
+    lst_t data;
+
+    md_t debug_mode;
+    md_t verification;
+};
+
 #endif
