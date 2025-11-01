@@ -20,6 +20,7 @@ struct lst
 
     err_t err_stat;
     md_t debug_mode;
+    md_t verification;
 };
 
 #endif

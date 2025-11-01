@@ -139,7 +139,6 @@ err_t reallocate_list_memory(lst* list)
     VERIFY_LIST();
 
     printf_log_msg(debug_mode, "reallocate_list_memory: done memory reallocation\n");
-    printf("ok\n");
     return ok;
 }
 
@@ -171,14 +170,13 @@ ssize_t insert_after(lst* list, ssize_t pos, lst_t el)
     list->next[insertion_pos] = list->next[pos];
     list->next[pos] = insertion_pos;
     list->prev[insertion_pos] = pos;
-
     list->size++;
 
     VERIFY_LIST();
 
     printf_log_msg(debug_mode, "insert_after: insertion finished\n");
-    if (debug_mode == on)
-        generate_dump_image(list);
+    
+    DISPLAY_LIST();
 
     return insertion_pos;
 }
@@ -212,14 +210,13 @@ ssize_t insert_before(lst* list, ssize_t pos, lst_t el)
     list->prev[insertion_pos] = list->prev[pos];
     list->prev[pos] = insertion_pos;
     list->next[insertion_pos] = pos;
-
     list->size++;
 
     VERIFY_LIST();
 
     printf_log_msg(debug_mode, "insert_before: insertion finished\n");
-    if (debug_mode == on)
-        generate_dump_image(list);
+
+    DISPLAY_LIST();
 
     return insertion_pos;
 }
@@ -246,14 +243,13 @@ err_t delete_ind(lst* list, ssize_t pos)
     list->next[pos] = list->free_pos;
     list->free_pos = pos;
     list->prev[pos] = -1;
-
     list->size--;
 
     VERIFY_LIST();
 
     printf_log_msg(debug_mode, "delete_ind: deleting finished\n");
-    if (debug_mode == on)
-        generate_dump_image(list);
+    
+    DISPLAY_LIST();
         
     return ok;
 }
@@ -292,6 +288,19 @@ void set_list_debug_mode(lst* list, md_t mode)
 
     list->debug_mode = mode;
 }
+
+
+void set_list_verification(lst* list, md_t mode)
+{
+    if (list == NULL)
+    {
+        printf(MAKE_BOLD_RED("ERROR: ") "[from list_ctor] -> list not found\n");
+        return;
+    }
+
+    list->verification = mode;
+}
+
 
 md_t get_list_debug_mode(lst* list)
 {

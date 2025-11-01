@@ -121,12 +121,17 @@ void print_dump(const lst* list, dump_purpose purpose)
 
     md_t debug_mode = list->debug_mode;
 
+    if (debug_mode == off)
+        return;
+
     printf_log_bold(debug_mode, "\n=================================LIST DUMP=================================\n\n", NULL);
 
     if (purpose == diagnostic)
         printf_log_msg(debug_mode, "cause: diagnostic\n\n");
     else
         printf_log_msg(debug_mode, "cause: error\n\n");
+
+    printf_log_msg(debug_mode, "verification = %d (0 - off, 1 - on)\n\n", list->verification);
 
     printf_log_bold(debug_mode, "list [%p]\n\n", list);
     printf_log_msg(debug_mode, "capacity = %zu\n", list->capacity);

@@ -52,7 +52,7 @@ void fill_preamble(FILE* fp)
 
     fprintf(fp, "rankdir = LR;\n");
     //fprintf(fp, "splines = ortho\n");
-    fprintf(fp, "bgcolor = \"#DBD9DB\"\n");
+    fprintf(fp, "bgcolor = \"white\"\n");
     fprintf(fp, "node[shape = doubleoctagon, style = \"filled\", fillcolor = \"red\", fontcolor = \"white\"]\n");
 }
 
@@ -63,7 +63,7 @@ void list_items(FILE* fp, const lst* list)
     assert(list != NULL);
 
     fprintf(fp, "{\n");
-    fprintf(fp, "edge[color=\"#DBD9DB\", weight = 100, len = 0]\n");
+    fprintf(fp, "edge[color=\"white\", weight = 100, len = 0]\n");
 
     for(size_t i = 0; i < list->capacity + 1; i++)
     {
@@ -73,7 +73,7 @@ void list_items(FILE* fp, const lst* list)
                                                                 list->data[i], list->prev[i], list->next[i]);
         else
             fprintf(fp, "%zu [rank = %zu, label = \"ind = %zu | value = %d | { prev = %zd | next = %zd }\", \
-                                   shape = Mrecord, style = filled, fillcolor = \"#D6E8A1\", fontcolor = \"black\"]\n", i, i, i, \
+                                   shape = Mrecord, style = filled, fillcolor = \"#F0F990\", fontcolor = \"black\"]\n", i, i, i, \
                                                                 list->data[i], list->prev[i], list->next[i]);
     }
     
@@ -106,7 +106,7 @@ void draw_arrows(FILE* fp, const lst* list)
     assert(list != NULL);
 
     fprintf(fp, "{\n");
-    fprintf(fp, "edge[color = \"#45503B\", weight = 0, penwidth = 1]\n");
+    fprintf(fp, "edge[color = \"#45503B\", weight = 0, penwidth = 1, constraint = false]\n");
     
     for (size_t i = 0; i < list->capacity; i++)
     {
@@ -117,14 +117,14 @@ void draw_arrows(FILE* fp, const lst* list)
     fprintf(fp, "}\n\n");
 
     fprintf(fp, "{\n");
-    fprintf(fp, "edge[color = \"#FAA18F\", weight = 0, penwidth = 1]\n");
+    fprintf(fp, "edge[color = \"#FAA18F\", weight = 0, penwidth = 1, constraint = false]\n");
 
     connect_nodes(fp, list, ltor);
 
     fprintf(fp, "}\n\n");
 
     fprintf(fp, "{\n");
-    fprintf(fp, "edge[color = \"#D5486B\", weight = 0, penwidth = 1]\n");
+    fprintf(fp, "edge[color = \"#D5486B\", weight = 0, penwidth = 1, constraint = false]\n");
     
     connect_nodes(fp, list, rtol);
 
