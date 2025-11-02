@@ -29,7 +29,7 @@ err_t list_ctor(lst* list, size_t capacity)
     list->free_pos = 1;
     list->size = 0;
 
-    VERIFY_LIST();
+    VERIFY_LIST(error);
 
     printf_log_msg(debug_mode, "list_ctor: initialization completed\n");
     return ok;
@@ -75,7 +75,7 @@ err_t allocate_list_memory(lst* list, size_t capacity)
     list->prev[0] = 0;
     list->next[list->capacity] = 0;
 
-    VERIFY_LIST();
+    VERIFY_LIST(error);
 
     printf_log_msg(debug_mode, "allocate_list_memory: done memory allocation\n");
 
@@ -85,7 +85,7 @@ err_t allocate_list_memory(lst* list, size_t capacity)
 
 err_t reallocate_list_memory(lst* list)
 {
-    VERIFY_LIST();
+    VERIFY_LIST(error);
 
     md_t debug_mode = list->debug_mode;
 
@@ -137,7 +137,7 @@ err_t reallocate_list_memory(lst* list)
 
     list->free_pos = (ssize_t) prev_capacity + 1;
 
-    VERIFY_LIST();
+    VERIFY_LIST(error);
 
     printf_log_msg(debug_mode, "reallocate_list_memory: done memory reallocation\n");
     return ok;
@@ -146,7 +146,7 @@ err_t reallocate_list_memory(lst* list)
 
 ssize_t insert_after(lst* list, ssize_t pos, lst_t el)
 {
-    VERIFY_LIST();
+    VERIFY_LIST(-1);
 
     md_t debug_mode = list->debug_mode;
 
@@ -173,7 +173,7 @@ ssize_t insert_after(lst* list, ssize_t pos, lst_t el)
     list->prev[insertion_pos] = pos;
     list->size++;
 
-    VERIFY_LIST();
+    VERIFY_LIST(-1);
 
     printf_log_msg(debug_mode, "insert_after: insertion finished\n");
     
@@ -185,7 +185,7 @@ ssize_t insert_after(lst* list, ssize_t pos, lst_t el)
 
 ssize_t insert_before(lst* list, ssize_t pos, lst_t el)
 {
-    VERIFY_LIST();
+    VERIFY_LIST(-1);
     
     //extern md_t debug_mode;
     md_t debug_mode = list->debug_mode;
@@ -213,7 +213,7 @@ ssize_t insert_before(lst* list, ssize_t pos, lst_t el)
     list->next[insertion_pos] = pos;
     list->size++;
 
-    VERIFY_LIST();
+    VERIFY_LIST(-1);
 
     printf_log_msg(debug_mode, "insert_before: insertion finished\n");
 
@@ -225,7 +225,7 @@ ssize_t insert_before(lst* list, ssize_t pos, lst_t el)
 
 err_t delete_ind(lst* list, ssize_t pos)
 {
-    VERIFY_LIST();
+    VERIFY_LIST(error);
 
     md_t debug_mode = list->debug_mode;
 
@@ -246,7 +246,7 @@ err_t delete_ind(lst* list, ssize_t pos)
     list->prev[pos] = -1;
     list->size--;
 
-    VERIFY_LIST();
+    VERIFY_LIST(error);
 
     printf_log_msg(debug_mode, "delete_ind: deleting finished\n");
     
@@ -258,11 +258,7 @@ err_t delete_ind(lst* list, ssize_t pos)
 
 size_t get_list_size(lst* list)
 {
-    if (list == NULL)
-    {
-        printf(MAKE_BOLD_RED("ERROR: ") "[from list_ctor] -> list not found\n");
-        return 0;
-    }
+    VERIFY_LIST(0);
 
     return list->size;
 }
@@ -270,22 +266,14 @@ size_t get_list_size(lst* list)
 
 size_t get_list_capacity(lst* list)
 {
-    if (list == NULL)
-    {
-        printf(MAKE_BOLD_RED("ERROR: ") "[from list_ctor] -> list not found\n");
-        return 0;
-    }
+    VERIFY_LIST(0);
 
     return list->capacity;
 }
 
 void set_list_debug_mode(lst* list, md_t mode)
 {
-    if (list == NULL)
-    {
-        printf(MAKE_BOLD_RED("ERROR: ") "[from list_ctor] -> list not found\n");
-        return;
-    }
+    VERIFY_LIST();
 
     list->debug_mode = mode;
 }
@@ -293,11 +281,7 @@ void set_list_debug_mode(lst* list, md_t mode)
 
 void set_list_verification(lst* list, md_t mode)
 {
-    if (list == NULL)
-    {
-        printf(MAKE_BOLD_RED("ERROR: ") "[from list_ctor] -> list not found\n");
-        return;
-    }
+    VERIFY_LIST();
 
     list->verification = mode;
 }
@@ -305,11 +289,7 @@ void set_list_verification(lst* list, md_t mode)
 
 md_t get_list_debug_mode(lst* list)
 {
-    if (list == NULL)
-    {
-        printf(MAKE_BOLD_RED("ERROR: ") "[from list_ctor] -> list not found\n");
-        return on;
-    }
+    VERIFY_LIST(off);
 
     return list->debug_mode;
 }
@@ -319,7 +299,7 @@ err_t list_dtor(lst* list)
 {
     if (list == NULL)
     {
-        printf(MAKE_BOLD_RED("ERROR: ") "[from list_ctor] -> list not found\n");
+        printf(MAKE_BOLD_RED("ERROR: ") "[from list_dtor] -> list not found\n");
         return error;
     }
     
@@ -382,7 +362,7 @@ err_t initialise_vlist(vanilla_list* vlist, md_t debug_mode, md_t verification)
     vlist->tail = NULL;
     vlist->size = 0;
 
-    // verifier
+    VERIFY_VLIST(error);
 
     return ok;
 }
@@ -391,7 +371,7 @@ err_t initialise_vlist(vanilla_list* vlist, md_t debug_mode, md_t verification)
 // inserts element after determined element and returns pointer of inserted element
 vlist_el* vlist_insert_after(vanilla_list* vlist,  vlist_el* el, lst_t value)
 {
-    // verifier
+    VERIFY_VLIST(NULL);
 
     md_t debug_mode = vlist->debug_mode;
 
@@ -433,6 +413,7 @@ vlist_el* vlist_insert_after(vanilla_list* vlist,  vlist_el* el, lst_t value)
         el->next = new_el;
     }
 
+    VERIFY_VLIST(NULL);
 
     printf_log_msg(debug_mode, "vlist_insert_after: inserted element [%p]\n", new_el);
 
@@ -445,7 +426,7 @@ vlist_el* vlist_insert_after(vanilla_list* vlist,  vlist_el* el, lst_t value)
 // deletes determined element and returns ok if deletion was successful
 err_t vlist_delete(vanilla_list* vlist, vlist_el* el)
 {
-    // verify 
+    VERIFY_VLIST(error);
 
     md_t debug_mode = vlist->debug_mode;
 
@@ -474,6 +455,8 @@ err_t vlist_delete(vanilla_list* vlist, vlist_el* el)
 
     vlist->size--;
 
+    VERIFY_VLIST(error);
+
     printf_log_msg(debug_mode, "vlist_delete: deleted element [%p]\n", el);
     
     DISPLAY_VLIST();
@@ -484,7 +467,7 @@ err_t vlist_delete(vanilla_list* vlist, vlist_el* el)
 // inserts element before determined element and returns pointer of inserted element
 vlist_el* vlist_insert_before(vanilla_list* vlist,  vlist_el* el, lst_t value) 
 {
-    // verifier
+    VERIFY_VLIST(NULL);
 
     md_t debug_mode = vlist->debug_mode;
 
@@ -509,7 +492,11 @@ vlist_el* vlist_insert_before(vanilla_list* vlist,  vlist_el* el, lst_t value)
 // destroys vanilla list
 void destroy_vlist(vanilla_list* vlist)
 {
-    // verifier 
+    if (vlist == NULL)
+    {
+        printf(MAKE_BOLD_RED("ERROR: ") "[from destroy_vlist] -> list not found\n");
+        return;
+    }
     
     md_t debug_mode = vlist->debug_mode;
 

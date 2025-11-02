@@ -36,10 +36,10 @@ void destroy_vlist(vanilla_list* vlist);
 }                                                   \
 while(0)
 
-#define VERIFY_LIST() do{                                           \
+#define VERIFY_LIST(RET) do{                                        \
     if (list->verification == on)                                   \
         if (process_verification(list) != ok)                       \
-            return error;                                           \
+            return RET;                                             \
 }                                                                   \
 while(0)
 
@@ -53,6 +53,13 @@ while(0)
     if (debug_mode == on)                                           \
         vlist_generate_dump_image(vlist);                           \
 }                                                                   \
+while(0)
+
+#define VERIFY_VLIST(RET) do{                                        \
+    if (vlist->verification == on)                                   \
+        if (process_vlist_verification(vlist) != ok)                 \
+            return RET;                                              \
+}                                                                    \
 while(0)
 
 #endif

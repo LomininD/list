@@ -216,6 +216,97 @@ void put_number(ssize_t number, md_t debug_mode)
     printf_log_msg(debug_mode, "%s", str);
 }
 
+
+err_t verify_vlist(const vanilla_list* vlist)
+{
+    if (vlist == NULL)
+    {
+        printf(MAKE_BOLD_RED("ERROR:") "[from vlist verifier] -> list not found\n");
+        return no_data;
+    }
+
+    bool found_errors = false;
+
+    md_t debug_mode = vlist->debug_mode;
+
+    if (vlist->err_stat != ok)
+    {
+        printf_err(debug_mode, "[from vlist verifier] -> error status is not ok\n");
+        found_errors = true;
+    }
+
+    size_t needed_size = vlist->size;
+    size_t factual_size = 0;
+
+    vlist_el* current_el = vlist->head;
+
+    while(current_el != NULL)
+    {
+        factual_size++;
+
+        if (current_el->prev != NULL)
+        {
+            if (current_el->prev->next != current_el)
+            {
+                printf_err(debug_mode, "[from vlist verifier] -> next and prev pointers do not match" \
+                                                "(prev of [%p] is [%p], while next of [%p] is [%p])\n", \
+                                 current_el, current_el->prev, current_el->prev, current_el->prev->next);
+            found_errors = true;
+            }
+        }
+
+        if (current_el->next == NULL && current_el != vlist->tail)
+        {
+            printf_err(debug_mode, "[from vlist verifier] -> wrong tail pointer [%p] (should be [%p])\n", \
+                                                                                    vlist->tail, current_el);
+            found_errors = true;
+        }
+
+        if (current_el->data == poison_value)
+        {
+            printf_err(debug_mode, "[from vlist verifier] -> vlist element [%p] is poisoned  \n", current_el);
+            found_errors = true;
+        }
+
+        current_el = current_el->next;
+    }
+
+    if (needed_size != factual_size)
+    {
+        printf_err(debug_mode, "[from vlist verifier] -> wrong size %zu (should be %zu)\n", \
+                                                                                    needed_size, factual_size);
+        found_errors = true;
+    }
+    
+    if (found_errors)
+        return error;
+    return ok;
+}
+
+
+err_t process_vlist_verification(const vanilla_list* vlist)
+{
+    err_t verified = verify_vlist(vlist);
+    if (verified == no_data)
+    {
+        printf(MAKE_BOLD_RED("\nverification failed")
+        ", not enough data to provide additional information\n");
+        return error;  
+    }   
+    else if (verified == error)
+    {                                                               
+        printf(MAKE_BOLD_RED("\nverification failed\n"));             
+        //print_dump(list, program_failure);                          
+        return error;                                               
+    }                                                               
+    else                                                            
+    {                                                               
+        printf_log_msg(vlist->debug_mode, "\nverification passed\n");  
+        return ok;
+    }      
+}
+
+
 // VLIST VERIFIER
 // check for each element:
 // - if data is not poisoned

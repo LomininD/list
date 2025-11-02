@@ -18,4 +18,6 @@ void print_dump(const lst* list, dump_purpose purpose);
 err_t check_connections(const lst* list, ssize_t * arr);
 void put_number(ssize_t number, md_t debug_mode);
 
+err_t verify_vlist(const vanilla_list* vlist);
+err_t process_vlist_verification(const vanilla_list* vlist);
 #endif
