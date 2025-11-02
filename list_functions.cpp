@@ -336,7 +336,7 @@ err_t list_dtor(lst* list)
     return ok;
 }
 
-
+// creates new vanilla list element and return it's pointer
 vlist_el* create_vlist_element(vanilla_list* vlist)
 {
     md_t debug_mode = vlist->debug_mode;
@@ -362,6 +362,7 @@ vlist_el* create_vlist_element(vanilla_list* vlist)
 }
 
 
+// initialises pre-created vanilla_list structure and returns ok if initialisation was successful
 err_t initialise_vlist(vanilla_list* vlist, md_t debug_mode, md_t verification)
 {
     printf_log_msg(debug_mode, "create_vlist: began initialising vlist\n");
@@ -381,14 +382,13 @@ err_t initialise_vlist(vanilla_list* vlist, md_t debug_mode, md_t verification)
     vlist->tail = NULL;
     vlist->size = 0;
 
-    //DISPLAY_VLIST();
-
     // verifier
 
     return ok;
 }
 
 
+// inserts element after determined element and returns pointer of inserted element
 vlist_el* vlist_insert_after(vanilla_list* vlist,  vlist_el* el, lst_t value)
 {
     // verifier
@@ -442,6 +442,46 @@ vlist_el* vlist_insert_after(vanilla_list* vlist,  vlist_el* el, lst_t value)
 }
 
 
+// deletes determined element and returns ok if deletion was successful
+err_t vlist_delete(vanilla_list* vlist, vlist_el* el)
+{
+    // verify 
+
+    md_t debug_mode = vlist->debug_mode;
+
+    if (el == NULL)
+    {
+        printf_err(debug_mode, "[from vlist_delete] -> could not delete NULL element\n");
+        vlist->err_stat = error;
+        return error;
+    }
+
+    printf_log_msg(debug_mode, "vlist_delete: began deleting element [%p]\n", el);
+
+    if (el == vlist->head)
+        vlist->head = el->next;
+
+    if (el == vlist->tail)
+        vlist->tail = el->prev;
+
+    if (el->next != NULL)
+        el->next->prev = el->prev;
+    
+    if (el->prev != NULL)
+        el->prev->next = el->next;
+
+    free(el);
+
+    vlist->size--;
+
+    printf_log_msg(debug_mode, "vlist_delete: deleted element [%p]\n", el);
+    
+    DISPLAY_VLIST();
+
+    return ok;
+}
+
+// inserts element before determined element and returns pointer of inserted element
 vlist_el* vlist_insert_before(vanilla_list* vlist,  vlist_el* el, lst_t value) 
 {
     // verifier
@@ -466,7 +506,7 @@ vlist_el* vlist_insert_before(vanilla_list* vlist,  vlist_el* el, lst_t value)
 }
 
 
-
+// destroys vanilla list
 void destroy_vlist(vanilla_list* vlist)
 {
     // verifier 

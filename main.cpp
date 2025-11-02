@@ -95,8 +95,10 @@ int main()
     vlist_insert_after(&vlist, first, 20);
     vlist_el* just_el = vlist_insert_after(&vlist, first, 30);
     vlist_insert_after(&vlist, first, 40);
-    vlist_insert_before(&vlist, first, 50);
+    //vlist_insert_before(&vlist, first, 50);
     vlist_insert_before(&vlist, just_el, 60);
+    vlist_delete(&vlist, just_el);
+    vlist_delete(&vlist, first);
 
     destroy_vlist(&vlist);
 
