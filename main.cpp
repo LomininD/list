@@ -85,15 +85,22 @@ int main()
     md_t debug_mode = on;
     md_t verification_mode = on;
 
+    vanilla_list vlist = {};
+
     initialize_list_log(debug_mode);
 
-    vanilla_list* el = create_vlist(10, debug_mode, verification_mode);
-    vanilla_list* anchor_el = vlist_insert_after(el, 52);
-    for (int i = 0; i <= 10; i++)
-        vlist_insert_before(anchor_el, i);
-    
-    destroy_vlist(el);
+    initialise_vlist(&vlist, debug_mode, verification_mode);
 
+    vlist_el* first = vlist_insert_after(&vlist, NULL, 10);
+    vlist_insert_after(&vlist, first, 20);
+    vlist_el* just_el = vlist_insert_after(&vlist, first, 30);
+    vlist_insert_after(&vlist, first, 40);
+    vlist_insert_before(&vlist, first, 50);
+    vlist_insert_before(&vlist, just_el, 60);
+
+    destroy_vlist(&vlist);
+
+    fclose(log_ptr);
     return 0;
 }
 

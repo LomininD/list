@@ -24,14 +24,24 @@ struct lst
 };
 
 
+struct vlist_el
+{
+    vlist_el* prev;
+    vlist_el* next;
+    lst_t data;
+};
+
+
 struct vanilla_list
 {
-    vanilla_list* prev;
-    vanilla_list* next;
-    lst_t data;
-
     md_t debug_mode;
     md_t verification;
+
+    vlist_el* head;
+    vlist_el* tail;
+
+    err_t err_stat;
+    size_t size;
 };
 
 #endif

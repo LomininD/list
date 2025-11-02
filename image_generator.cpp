@@ -177,6 +177,8 @@ void connect_nodes(FILE* fp, const lst* list, directions dir)
 
 void vlist_generate_dump_image(const vanilla_list* vlist)
 {
+    assert(vlist != NULL);
+
     static unsigned long long image_count = 0; // size_t?
 
     char code_file_name[file_name_size] = {};
@@ -211,7 +213,7 @@ void vlist_list_items(FILE* fp, const vanilla_list* vlist)
     fprintf(fp, "{\n");
     fprintf(fp, "edge[color=\"#FAA18F\", weight = 100, len = 0, dir = both]\n");
 
-    vanilla_list* current_element = (vanilla_list*) vlist;
+    const vlist_el* current_element = (const vlist_el*) vlist->head;
     size_t i = 0;
 
     while (current_element != NULL)
@@ -222,6 +224,18 @@ void vlist_list_items(FILE* fp, const vanilla_list* vlist)
         
         if (i != 0)
             fprintf(fp, "%zu->%zu\n", i-1, i);
+
+        if (current_element == vlist->head)
+        {
+            fprintf(fp, "HEAD [shape = invhouse; label = \"head\"; fontcolor = \"black\"; fillcolor = \"#FAA18F \"]\n");
+            fprintf(fp, "{rank = same; HEAD; %zd}\n\n", i);
+        }
+
+        if (current_element == vlist->tail)
+        {
+            fprintf(fp, "TAIL [shape = invhouse; label = \"tail\"; fillcolor = \"#D5486B\"]\n");
+            fprintf(fp, "{rank = same; TAIL; %zd}\n\n", i);
+        }
 
         current_element = current_element->next;
         i++;

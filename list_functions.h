@@ -22,11 +22,10 @@ md_t get_list_debug_mode(lst* list);
 err_t list_dtor(lst* list);
 
 
-vanilla_list* create_vlist(lst_t value, md_t debug_mode, md_t verification);
-vanilla_list* vlist_insert_after(vanilla_list* el, lst_t value);
-vanilla_list* vlist_insert_before(vanilla_list* el, lst_t value);
+err_t initialise_vlist(vanilla_list* vlist, md_t debug_mode, md_t verification);
+vlist_el* vlist_insert_after(vanilla_list* vlist,  vlist_el* el, lst_t value);
+vlist_el* vlist_insert_before(vanilla_list* vlist,  vlist_el* el, lst_t value);
 void destroy_vlist(vanilla_list* vlist);
-
 
 
 #define ASSERT_CAPACITY() do{                       \
@@ -51,7 +50,7 @@ while(0)
 
 #define DISPLAY_VLIST() do{                                         \
     if (debug_mode == on)                                           \
-        vlist_generate_dump_image(el);                              \
+        vlist_generate_dump_image(vlist);                           \
 }                                                                   \
 while(0)
 

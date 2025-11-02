@@ -5,8 +5,8 @@
 static err_t allocate_list_memory(lst* list, size_t capacity);
 static err_t reallocate_list_memory(lst* list);
 
-static vanilla_list* create_vlist_element(md_t debug_mode, md_t verification);
-// static void destroy_vlist_element(vanilla_list* vlist);
+vlist_el* create_vlist_element(vanilla_list* vlist);
+// static void destroy_vlist_element(vlist_el* vlist);
 
 
 err_t list_ctor(lst* list, size_t capacity)
@@ -337,69 +337,102 @@ err_t list_dtor(lst* list)
 }
 
 
-vanilla_list* create_vlist_element(md_t debug_mode, md_t verification)
+vlist_el* create_vlist_element(vanilla_list* vlist)
 {
-    printf_log_msg(debug_mode, "create_vlist_ptr: began allocating memory for new element\n");
+    md_t debug_mode = vlist->debug_mode;
+
+    printf_log_msg(debug_mode, "create_vlist_element: began allocating memory for new element\n");
     
-    vanilla_list* new_el_ptr = (vanilla_list*) calloc(1, sizeof(vanilla_list));
+    vlist_el* new_el_ptr = (vlist_el*) calloc(1, sizeof(vlist_el));
 
     if (new_el_ptr == NULL)
     {
-        printf_err(debug_mode, "[from create_vlist_ptr] -> failed to allocate memory for vanilla list element\n");
+        printf_err(debug_mode, "[from create_vlist_element] -> failed to allocate memory for vanilla list element\n");
+        vlist->err_stat = error;
         return NULL;
     }
 
-    new_el_ptr->debug_mode = debug_mode;
-    new_el_ptr->debug_mode = verification;
     new_el_ptr->data = poison_value;
     new_el_ptr->prev = NULL;
     new_el_ptr->next = NULL;
 
-    printf_log_msg(debug_mode, "create_vlist_ptr: done allocating memory for new element [%p]\n", new_el_ptr);
+    printf_log_msg(debug_mode, "create_vlist_element: done allocating memory for new element [%p]\n", new_el_ptr);
     
     return new_el_ptr;
 }
 
 
-vanilla_list* create_vlist(lst_t value, md_t debug_mode, md_t verification)
+err_t initialise_vlist(vanilla_list* vlist, md_t debug_mode, md_t verification)
 {
-    printf_log_msg(debug_mode, "create_vlist: began creating vlist\n");
+    printf_log_msg(debug_mode, "create_vlist: began initialising vlist\n");
 
-    vanilla_list* el = create_vlist_element(debug_mode, verification);
+    if (vlist == NULL)
+    {
+        printf_err(debug_mode, "[from initialise_vlist] -> got NULL vlist pointer\n");
+        return error;
+    }
 
-    if (el == NULL)
-        return NULL;
+    printf_log_msg(debug_mode, "create_vlist: vlist initialised\n");
 
-    el->data = value;
+    vlist->debug_mode = debug_mode;
+    vlist->verification = verification;
+    vlist->err_stat = ok;
+    vlist->head = NULL;
+    vlist->tail = NULL;
+    vlist->size = 0;
 
-    printf_log_msg(debug_mode, "create_vlist: vlist created [%p]\n", el);
+    //DISPLAY_VLIST();
 
-    DISPLAY_VLIST();
+    // verifier
 
-    return el;
+    return ok;
 }
 
 
-vanilla_list* vlist_insert_after(vanilla_list* el, lst_t value)
+vlist_el* vlist_insert_after(vanilla_list* vlist,  vlist_el* el, lst_t value)
 {
     // verifier
 
-    md_t debug_mode = el->debug_mode;
+    md_t debug_mode = vlist->debug_mode;
 
     printf_log_msg(debug_mode, "vlist_insert_after: began insertion after vlist element [%p]\n", el);
 
-    vanilla_list* new_el = create_vlist_element(debug_mode, el->verification);
+    vlist_el* new_el = create_vlist_element(vlist);
 
     if (new_el == NULL)
         return NULL;
 
-    if (el->next != NULL)
-        (el->next)->prev = new_el;
-
     new_el->data = value;
-    new_el->next = el->next;
-    new_el->prev = el;
-    el->next = new_el;
+    vlist->size++;
+
+    if (el == NULL)
+    {
+        if (vlist->head != NULL)
+            vlist->head->prev = new_el;
+
+        new_el->next = vlist->head;
+        new_el->prev = NULL;
+        vlist->head = new_el;
+        if (vlist->tail == NULL)
+            vlist->tail = new_el;
+    }
+    else
+    {
+        if (el->next == NULL)
+        {
+            new_el->next = NULL;
+            vlist->tail = new_el;
+        }
+        else
+        {
+            el->next->prev = new_el;
+            new_el->next = el->next;
+        }
+
+        new_el->prev = el;
+        el->next = new_el;
+    }
+
 
     printf_log_msg(debug_mode, "vlist_insert_after: inserted element [%p]\n", new_el);
 
@@ -409,23 +442,29 @@ vanilla_list* vlist_insert_after(vanilla_list* el, lst_t value)
 }
 
 
-vanilla_list* vlist_insert_before(vanilla_list* el, lst_t value) // FIXME - smth wrong with debug_mode, wouldnt work for 1 el
+vlist_el* vlist_insert_before(vanilla_list* vlist,  vlist_el* el, lst_t value) 
 {
     // verifier
 
-    md_t debug_mode = el->debug_mode;
+    md_t debug_mode = vlist->debug_mode;
 
-    printf("%d\n", debug_mode);
+    if (el == NULL)
+    {
+        printf_err(debug_mode, "[from vlist_insert_before] -> could not insert before NULL element\n");
+        vlist->err_stat = error;
+        return NULL;
+    }
 
     printf_log_msg(debug_mode, "vlist_insert_before: began insertion before vlist element [%p]\n", el);
     printf_log_msg(debug_mode, "vlist_insert_before: redirecting function call to vlist_insert_after [%p]\n", el->prev);
 
-    vanilla_list* new_el = vlist_insert_after(el->prev, value);
+    vlist_el* new_el = vlist_insert_after(vlist, el->prev, value);
 
     printf_log_msg(debug_mode, "vlist_insert_before: inserted element [%p]\n", new_el);
 
     return new_el;
 }
+
 
 
 void destroy_vlist(vanilla_list* vlist)
@@ -436,8 +475,8 @@ void destroy_vlist(vanilla_list* vlist)
 
     printf_log_msg(debug_mode, "destroy_vlist: began destruction of vanilla list\n");
      
-    vanilla_list* current_el = vlist;
-    vanilla_list* next_el = NULL;
+    vlist_el* current_el = vlist->head;
+    vlist_el* next_el = NULL;
 
     while(current_el != NULL)
     {
