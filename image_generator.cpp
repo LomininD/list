@@ -218,9 +218,16 @@ void vlist_list_items(FILE* fp, const vanilla_list* vlist)
 
     while (current_element != NULL)
     {
-        fprintf(fp, "%zu [label = \"ptr = %p | value = %d | { prev = %p | next = %p }\", \
-                            shape = Mrecord, style = filled, fillcolor = \"#C0C0C0\", fontcolor = \"black\"]\n", i, \
-                                        current_element, current_element->data, current_element->prev, current_element->next);
+        fprintf(fp, "%zu [label = \"ptr = %p | ", i, current_element);
+        
+        if (current_element->data == poison_value)
+            fprintf(fp, "value = %x", current_element->data);
+        else
+            fprintf(fp, "value = %d", current_element->data);
+
+        fprintf(fp, " | { prev = %p | next = %p }\", shape = Mrecord, style = filled, " \
+                "fillcolor = \"#C0C0C0\", fontcolor = \"black\"]\n", current_element->prev, \
+                                                                        current_element->next);
         
         if (i != 0)
             fprintf(fp, "%zu->%zu\n", i-1, i);

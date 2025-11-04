@@ -11,6 +11,9 @@ err_t verify_list(const lst* list)
         return no_data;
     }
 
+    if (list->verification == off)
+        return ok;
+
     bool found_errors = false;
 
     md_t debug_mode = list->debug_mode;
@@ -225,6 +228,9 @@ err_t verify_vlist(const vanilla_list* vlist)
         return no_data;
     }
 
+    if (vlist->verification == off)
+        return ok;
+
     bool found_errors = false;
 
     md_t debug_mode = vlist->debug_mode;
@@ -248,10 +254,10 @@ err_t verify_vlist(const vanilla_list* vlist)
         {
             if (current_el->prev->next != current_el)
             {
-                printf_err(debug_mode, "[from vlist verifier] -> next and prev pointers do not match" \
+                printf_err(debug_mode, "[from vlist verifier] -> next and prev pointers do not match " \
                                                 "(prev of [%p] is [%p], while next of [%p] is [%p])\n", \
                                  current_el, current_el->prev, current_el->prev, current_el->prev->next);
-            found_errors = true;
+                found_errors = true;
             }
         }
 
@@ -259,6 +265,13 @@ err_t verify_vlist(const vanilla_list* vlist)
         {
             printf_err(debug_mode, "[from vlist verifier] -> wrong tail pointer [%p] (should be [%p])\n", \
                                                                                     vlist->tail, current_el);
+            found_errors = true;
+        }
+
+        if (current_el->prev == NULL && current_el != vlist->head)
+        {
+            printf_err(debug_mode, "[from vlist verifier] -> wrong head pointer [%p] (should be [%p])\n", \
+                                                                                    vlist->head, current_el);
             found_errors = true;
         }
 
@@ -296,7 +309,8 @@ err_t process_vlist_verification(const vanilla_list* vlist)
     else if (verified == error)
     {                                                               
         printf(MAKE_BOLD_RED("\nverification failed\n"));             
-        //print_dump(list, program_failure);                          
+        // print_vlist_dump(vlist, program_failure); 
+        vlist_generate_dump_image(vlist);                         
         return error;                                               
     }                                                               
     else                                                            

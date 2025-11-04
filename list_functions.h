@@ -36,11 +36,10 @@ void destroy_vlist(vanilla_list* vlist);
 }                                                   \
 while(0)
 
-#define VERIFY_LIST(RET) do{                                        \
-    if (list->verification == on)                                   \
-        if (process_verification(list) != ok)                       \
-            return RET;                                             \
-}                                                                   \
+#define VERIFY_LIST(RET) do{                                    \
+    if (process_verification(list) != ok)                       \
+        return RET;                                             \
+}                                                               \
 while(0)
 
 #define DISPLAY_LIST() do{                                          \
@@ -55,11 +54,10 @@ while(0)
 }                                                                   \
 while(0)
 
-#define VERIFY_VLIST(RET) do{                                        \
-    if (vlist->verification == on)                                   \
-        if (process_vlist_verification(vlist) != ok)                 \
-            return RET;                                              \
-}                                                                    \
+#define VERIFY_VLIST(RET) do{                                    \
+    if (process_vlist_verification(vlist) != ok)                 \
+        return RET;                                              \
+}                                                                \
 while(0)
 
 #endif

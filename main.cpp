@@ -91,14 +91,29 @@ int main()
 
     initialise_vlist(&vlist, debug_mode, verification_mode);
 
+    // vlist_el* first = vlist_insert_after(&vlist, NULL, 10);
+    // vlist_insert_after(&vlist, first, 20);
+    // vlist_el* just_el = vlist_insert_after(&vlist, first, 30);
+    // vlist_insert_after(&vlist, first, 40);
+    // vlist_insert_before(&vlist, first, 50);
+    // vlist_insert_before(&vlist, just_el, 60);
+    // vlist_delete(&vlist, just_el);
+    // vlist_delete(&vlist, first);
+
+    // vlist_el* first = vlist_insert_after(&vlist, NULL, 10);
+    // vlist_el* second = vlist_insert_after(&vlist, first, 20);
+    // vlist_el* third = vlist_insert_after(&vlist, second, 30);
+    // vlist_delete(&vlist, second);
+    // vlist_delete(&vlist, third);
+    // vlist_delete(&vlist, first);
+
     vlist_el* first = vlist_insert_after(&vlist, NULL, 10);
-    vlist_insert_after(&vlist, first, 20);
-    vlist_el* just_el = vlist_insert_after(&vlist, first, 30);
-    vlist_insert_after(&vlist, first, 40);
-    //vlist_insert_before(&vlist, first, 50);
-    vlist_insert_before(&vlist, just_el, 60);
-    vlist_delete(&vlist, just_el);
-    vlist_delete(&vlist, first);
+    vlist_el* second = vlist_insert_after(&vlist, first, 20);
+    vlist_el* third = vlist_insert_after(&vlist, second, 30);
+
+    second->next = NULL; // where is the tail?
+
+    vlist_insert_after(&vlist, second, 40);
 
     destroy_vlist(&vlist);
 
