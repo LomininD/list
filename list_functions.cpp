@@ -494,13 +494,15 @@ void destroy_vlist(vanilla_list* vlist)
      
     vlist_el* current_el = vlist->head;
     vlist_el* next_el = NULL;
+    size_t i  = 0;
 
-    while(current_el != NULL)
+    while(current_el != NULL && i < vlist->size)
     {
         next_el = current_el->next;
         printf_log_msg(debug_mode, "destroy_vlist: deleting [%p]\n", current_el);
         free(current_el);
         current_el = next_el;
+        i++;
     }
 
     printf_log_msg(debug_mode, "destroy_vlist: done destruction of vanilla list\n");

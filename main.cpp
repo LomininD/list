@@ -7,7 +7,7 @@
 int main()
 {
     // LIST
-    ///*
+    /*
     
     lst list = {};
 
@@ -81,10 +81,10 @@ int main()
     }
     list_dtor(&list);
     
-    //*/
+    */
 
     // VLIST 
-    /*
+    ///*
     md_t debug_mode = on;
 
     vanilla_list vlist = {};
@@ -117,7 +117,7 @@ int main()
 
     destroy_vlist(&vlist);
 
-    */
+    //*/
 
     fclose(log_ptr);
     return 0;

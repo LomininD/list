@@ -1,8 +1,8 @@
 #ifndef LIST_PROPERTIES_H
 #define LIST_PROPERTIES_H
 
-//#define VLIST_VERIFICATION
 //#define LIST_VERIFICATION
+#define VLIST_VERIFICATION
 
 #include <stdlib.h>
 #include "debug.h"

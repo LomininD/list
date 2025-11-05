@@ -59,12 +59,6 @@ while(0)
 }                                                                   \
 while(0)
 
-#define DISPLAY_VLIST() do{                                         \
-    if (debug_mode == on)                                           \
-        vlist_generate_dump_image(vlist);                           \
-}                                                                   \
-while(0)
-
 #ifdef VLIST_VERIFICATION
 
 #define VERIFY_VLIST(RET) do{                                    \
@@ -82,5 +76,11 @@ while(0)
 while(0)
 
 #endif
+
+#define DISPLAY_VLIST() do{                                         \
+    if (debug_mode == on)                                           \
+        vlist_generate_dump_image(vlist);                           \
+}                                                                   \
+while(0)
 
 #endif

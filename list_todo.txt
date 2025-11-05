@@ -1,11 +1,24 @@
-FRIDAY 
-
 // TODO - make verificator and dump disableable
 // TODO - combine insert
+// TODO - make classical list
+// TODO - make list sort function 
+// TODO - make function that checks if list is sorted - sorts in new memory
+// TODO - review code
+// TODO - realocation 
+// TODO - time in log
+// TODO - debug mode as argument in ctor
+// TODO - time tests
+// TODO - clean up code
 
+// TODO - add static to image generator and dump 
 
 --QUESTIONS--
 // TODO - why fprintf requires FILE* but not const FILE*
+// TODO - if we create struct in func the struct will be destroyed if we leave function 
+// TODO - how to check if pointer is ok
+// TODO - ask if my cond comp is ok
+// TODO - do I need to make cond compilation for list and vlist?
+
 
 --TO READ--
 // TODO - read about dynamic memory in kernigan 

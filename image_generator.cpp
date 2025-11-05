@@ -216,7 +216,7 @@ void vlist_list_items(FILE* fp, const vanilla_list* vlist)
     const vlist_el* current_element = (const vlist_el*) vlist->head;
     size_t i = 0;
 
-    while (current_element != NULL)
+    while (current_element != NULL && i < vlist->size)
     {
         fprintf(fp, "%zu [label = \"ptr = %p | ", i, current_element);
         

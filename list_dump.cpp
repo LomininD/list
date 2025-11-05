@@ -239,7 +239,7 @@ err_t verify_vlist(const vanilla_list* vlist)
 
     vlist_el* current_el = vlist->head;
 
-    while(current_el != NULL)
+    while(current_el != NULL && factual_size <= needed_size)
     {
         factual_size++;
 
@@ -303,7 +303,7 @@ err_t process_vlist_verification(const vanilla_list* vlist)
     else if (verified == error)
     {                                                               
         printf(MAKE_BOLD_RED("\nverification failed\n"));             
-        // print_vlist_dump(vlist, program_failure); 
+        print_vlist_dump(vlist, program_failure); 
         vlist_generate_dump_image(vlist);                         
         return error;                                               
     }                                                               
@@ -312,6 +312,54 @@ err_t process_vlist_verification(const vanilla_list* vlist)
         printf_log_msg(vlist->debug_mode, "\nverification passed\n");  
         return ok;
     }      
+}
+
+
+
+void print_vlist_dump(const vanilla_list* vlist, dump_purpose purpose)
+{
+    assert(vlist != NULL);
+
+    md_t debug_mode = vlist->debug_mode;
+
+    if (debug_mode == off)
+        return;
+
+    printf_log_bold(debug_mode, "\n=============================VANILLA LIST DUMP=============================\n\n", NULL);
+
+    if (purpose == diagnostic)
+        printf_log_msg(debug_mode, "cause: diagnostic\n\n");
+    else
+        printf_log_msg(debug_mode, "cause: error\n\n");
+
+    printf_log_bold(debug_mode, "vanilla list [%p]\n\n", vlist);
+    printf_log_msg(debug_mode, "size = %zu\n\n", vlist->size);
+
+    printf_log_msg(debug_mode, "err_stat = %d (0 - no error, 1 - error)\n\n", vlist->err_stat);
+
+    printf_log_bold(debug_mode, "head [%p]\n", vlist->head);
+    printf_log_bold(debug_mode, "tail [%p]\n", vlist->tail);
+
+    size_t count = 0;
+    vlist_el* current_el = vlist->head;
+
+    while (count < vlist->size)
+    {
+        count++;
+        printf_log_msg(debug_mode, "element [%p]: data = ", current_el);
+
+        put_number(current_el->data, debug_mode);
+        printf_log_msg(debug_mode, "  ");
+
+        printf_log_msg(debug_mode, " prev = %p", current_el->prev);
+        printf_log_msg(debug_mode, " next = %p\n", current_el->next);
+
+        current_el = current_el->next;
+    }
+
+    printf_log_bold(debug_mode, "\n===========================================================================\n\n", NULL);
+
+    vlist_generate_dump_image(vlist);
 }
 
 
