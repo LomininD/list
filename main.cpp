@@ -7,11 +7,11 @@
 int main()
 {
     // LIST
-    /*
+    ///*
     
     lst list = {};
 
-    set_list_debug_mode(&list, off);
+    set_list_debug_mode(&list, on);
 
     if (get_list_debug_mode(&list) == on)
         initialize_list_log(on);
@@ -58,7 +58,6 @@ int main()
     insert_before(&list, 1, 20);
     print_dump(&list, diagnostic);
     
-    
 
     // SEVERELY CORRUPTED STRUCTURE
     // insert_after(&list, 0, 10);
@@ -81,10 +80,10 @@ int main()
     }
     list_dtor(&list);
     
-    */
+    //*/
 
     // VLIST 
-    ///*
+    /*
     md_t debug_mode = on;
 
     vanilla_list vlist = {};
@@ -117,7 +116,7 @@ int main()
 
     destroy_vlist(&vlist);
 
-    //*/
+    */
 
     fclose(log_ptr);
     return 0;

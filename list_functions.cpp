@@ -187,7 +187,6 @@ ssize_t insert_before(lst* list, ssize_t pos, lst_t el)
 {
     VERIFY_LIST(-1);
     
-    //extern md_t debug_mode;
     md_t debug_mode = list->debug_mode;
 
     printf_log_msg(debug_mode, "insert_before: began insertion of %d before index %zd\n", el, pos);
@@ -200,24 +199,11 @@ ssize_t insert_before(lst* list, ssize_t pos, lst_t el)
         return -1;
     }
 
-    ASSERT_CAPACITY();
+    printf_log_msg(debug_mode, "insert_before: redirecting function call to insert after %zd", list->prev[pos]);
 
-    ssize_t insertion_pos = list->free_pos;
-    
-    list->free_pos = list->next[list->free_pos];
-    list->data[insertion_pos] = el;
-
-    list->next[list->prev[pos]] = insertion_pos;
-    list->prev[insertion_pos] = list->prev[pos];
-    list->prev[pos] = insertion_pos;
-    list->next[insertion_pos] = pos;
-    list->size++;
-
-    VERIFY_LIST(-1);
+    ssize_t insertion_pos = insert_after(list, list->prev[pos], el);
 
     printf_log_msg(debug_mode, "insert_before: insertion finished\n");
-
-    DISPLAY_LIST();
 
     return insertion_pos;
 }
