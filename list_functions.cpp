@@ -50,16 +50,20 @@ err_t allocate_list_memory(lst* list, size_t capacity)
 
     printf_log_msg(debug_mode, "allocate_list_memory: began memory allocation\n");
     
-    list->data = (lst_t*) calloc(capacity + 1, sizeof(lst_t));
-    list->next = (ssize_t*) calloc(capacity + 1, sizeof(ssize_t));
-    list->prev = (ssize_t*) calloc(capacity + 1, sizeof(ssize_t));
+    lst_t* raw_data = (lst_t*) calloc(capacity + 1, sizeof(lst_t));
+    ssize_t* raw_next = (ssize_t*) calloc(capacity + 1, sizeof(ssize_t));
+    ssize_t* raw_prev = (ssize_t*) calloc(capacity + 1, sizeof(ssize_t));
 
-    if (list->data == NULL || list->next == NULL || list->prev == NULL)
+    if (raw_data == NULL || raw_next == NULL || raw_prev == NULL)
     {
         printf_err(debug_mode, "from list [%s:%d] -> allocate_list_memory: could not allocate memory\n", __FILE__, __LINE__);
         list->err_stat = error;
         return error;
     }
+
+    list->data = raw_data;
+    list->next = raw_next;
+    list->prev = raw_prev;
 
     for (size_t i = 0; i < capacity + 1; i++)
     {
@@ -75,7 +79,7 @@ err_t allocate_list_memory(lst* list, size_t capacity)
     list->prev[0] = 0;
     list->next[list->capacity] = 0;
 
-    VERIFY_LIST(error);
+    //VERIFY_LIST(error);
 
     printf_log_msg(debug_mode, "allocate_list_memory: done memory allocation\n");
 
@@ -93,8 +97,8 @@ err_t reallocate_list_memory(lst* list)
 
     size_t prev_capacity = list->capacity;
 
-    if (list->capacity < 10)
-        list->capacity = 10;
+    if (list->capacity < recommended_min_number_of_elements)
+        list->capacity = recommended_min_number_of_elements;
     
     list->capacity *= 2;
     printf_log_msg(debug_mode, "previous capacity = %zu, new capacity = %zu\n", prev_capacity, list->capacity);
@@ -240,6 +244,75 @@ err_t delete_ind(lst* list, ssize_t pos)
         
     return ok;
 }
+
+
+err_t clean_up_list(lst* list)
+{
+    VERIFY_LIST(error);
+
+    md_t debug_mode = list->debug_mode;
+
+    printf_log_msg(debug_mode, "clean_up_list: began cleaning up list\n");
+
+    size_t new_capacity;
+
+    if (list->capacity > 4 * list->size)
+    {
+        new_capacity = list->capacity / 2;
+        printf_log_msg(debug_mode, "clean_up_list: removing excess memory" \
+                        " (list capacity of %zu is decreased to %zu)\n", list->capacity, new_capacity);
+    }
+    else
+    {
+        new_capacity = list->capacity;
+        printf_log_msg(debug_mode, "clean_up_list: list capacity has not changed\n");
+    }
+
+    lst_t* old_data = list->data;
+    ssize_t* old_next = list->next;
+    ssize_t* old_prev = list->prev;
+
+    err_t allocated = allocate_list_memory(list, new_capacity);
+    if (allocated != ok)
+        return allocated;
+
+    printf_log_msg(debug_mode, "old data: %p\n", old_data);
+    printf_log_msg(debug_mode, "old next: %p\n", old_next);
+    printf_log_msg(debug_mode, "old prev: %p\n", old_prev);
+
+    printf_log_msg(debug_mode, "new data: %p\n", list->data);
+    printf_log_msg(debug_mode, "new next: %p\n", list->next);
+    printf_log_msg(debug_mode, "new prev: %p\n", list->prev);
+
+    ssize_t current_ind = old_next[0];
+
+    for (ssize_t i = 1; i <= (ssize_t) list->size; i++)
+    {
+        list->data[i] = old_data[current_ind];
+        list->next[i] = i + 1;
+        list->prev[i] = i - 1;
+        current_ind = old_next[current_ind];
+    }
+
+    list->next[list->size] = 0;
+    list->next[0] = 1;
+    list->prev[0] = (ssize_t) list->size; 
+    list->free_pos = (ssize_t) list->size + 1;
+    list->capacity = new_capacity;
+
+    free(old_data);
+    free(old_next);
+    free(old_prev);
+
+    printf_log_msg(debug_mode, "clean_up_list: done cleaning up list\n");
+
+    DISPLAY_LIST();
+
+    return ok;
+}
+
+
+
 
 
 size_t get_list_size(lst* list)

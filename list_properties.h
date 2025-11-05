@@ -8,6 +8,7 @@
 #include "debug.h"
 
 const int poison_value = 0xbadf00d;
+const size_t recommended_min_number_of_elements = 5;
 
 typedef int lst_t;
 

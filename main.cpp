@@ -7,7 +7,7 @@
 int main()
 {
     // LIST
-    ///*
+    /*
     
     lst list = {};
 
@@ -33,30 +33,32 @@ int main()
 // 
 //     insert_after(&list, 8, 900);
 
-    // WORKING LIST
+    //WORKING LIST
     // insert_after(&list, 0, 20);
     // insert_after(&list, 1, 30);
     // insert_before(&list, 1, 10);
     // delete_ind(&list, 2);
+    // //clean_up_list(&list);
     // print_dump(&list, diagnostic);
 
     // LOTS OF INSERTIONS
-    insert_after(&list, 0, 50);
-    insert_after(&list, 1, 10);
-    insert_before(&list, 1, 20);
-    insert_after(&list, 1, 10);
-    insert_before(&list, 1, 20);
-    insert_after(&list, 1, 10);
-    insert_before(&list, 1, 20);
-    insert_after(&list, 1, 10);
-    insert_before(&list, 1, 20);
-    insert_after(&list, 1, 10);
-    insert_before(&list, 1, 20);
-    insert_after(&list, 1, 10);
-    insert_before(&list, 1, 20);
-    insert_after(&list, 1, 10);
-    insert_before(&list, 1, 20);
-    print_dump(&list, diagnostic);
+    // insert_after(&list, 0, 50);
+    // insert_after(&list, 1, 10);
+    // insert_before(&list, 1, 40);
+    // insert_after(&list, 1, 10);
+    // insert_before(&list, 1, 40);
+    // insert_after(&list, 1, 10);
+    // insert_before(&list, 1, 40);
+    // insert_after(&list, 1, 10);
+    // insert_before(&list, 1, 40);
+    // insert_after(&list, 1, 10);
+    // insert_before(&list, 1, 40);
+    // insert_after(&list, 1, 10);
+    // insert_before(&list, 1, 40);
+    // insert_after(&list, 1, 10);
+    // insert_before(&list, 1, 40);
+    // clean_up_list(&list);
+    // print_dump(&list, diagnostic);
     
 
     // SEVERELY CORRUPTED STRUCTURE
@@ -80,10 +82,10 @@ int main()
     }
     list_dtor(&list);
     
-    //*/
+    */
 
     // VLIST 
-    /*
+    
     md_t debug_mode = on;
 
     vanilla_list vlist = {};
@@ -116,7 +118,7 @@ int main()
 
     destroy_vlist(&vlist);
 
-    */
+    
 
     fclose(log_ptr);
     return 0;
