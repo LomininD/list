@@ -11,9 +11,6 @@ err_t verify_list(const lst* list)
         return no_data;
     }
 
-    if (list->verification == off)
-        return ok;
-
     bool found_errors = false;
 
     md_t debug_mode = list->debug_mode;
@@ -68,6 +65,7 @@ err_t verify_list(const lst* list)
 err_t process_verification(const lst* list)
 {
     err_t verified = verify_list(list);
+
     if (verified == no_data)
     {
         printf(MAKE_BOLD_RED("\nverification failed")
@@ -133,8 +131,6 @@ void print_dump(const lst* list, dump_purpose purpose)
         printf_log_msg(debug_mode, "cause: diagnostic\n\n");
     else
         printf_log_msg(debug_mode, "cause: error\n\n");
-
-    printf_log_msg(debug_mode, "verification = %d (0 - off, 1 - on)\n\n", list->verification);
 
     printf_log_bold(debug_mode, "list [%p]\n\n", list);
     printf_log_msg(debug_mode, "capacity = %zu\n", list->capacity);
@@ -228,9 +224,6 @@ err_t verify_vlist(const vanilla_list* vlist)
         return no_data;
     }
 
-    if (vlist->verification == off)
-        return ok;
-
     bool found_errors = false;
 
     md_t debug_mode = vlist->debug_mode;
@@ -298,8 +291,9 @@ err_t verify_vlist(const vanilla_list* vlist)
 
 
 err_t process_vlist_verification(const vanilla_list* vlist)
-{
+{    
     err_t verified = verify_vlist(vlist);
+
     if (verified == no_data)
     {
         printf(MAKE_BOLD_RED("\nverification failed")

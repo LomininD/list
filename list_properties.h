@@ -1,6 +1,9 @@
 #ifndef LIST_PROPERTIES_H
 #define LIST_PROPERTIES_H
 
+//#define VLIST_VERIFICATION
+//#define LIST_VERIFICATION
+
 #include <stdlib.h>
 #include "debug.h"
 
@@ -20,7 +23,6 @@ struct lst
 
     err_t err_stat;
     md_t debug_mode;
-    md_t verification;
 };
 
 
@@ -35,7 +37,6 @@ struct vlist_el
 struct vanilla_list
 {
     md_t debug_mode;
-    md_t verification;
 
     vlist_el* head;
     vlist_el* tail;

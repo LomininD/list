@@ -16,13 +16,12 @@ err_t delete_ind(lst* list, ssize_t pos);
 size_t get_list_size(lst* list);
 size_t get_list_capacity(lst* list);
 void set_list_debug_mode(lst* list, md_t mode);
-void set_list_verification(lst* list, md_t mode);
 md_t get_list_debug_mode(lst* list);
 
 err_t list_dtor(lst* list);
 
 
-err_t initialise_vlist(vanilla_list* vlist, md_t debug_mode, md_t verification);
+err_t initialise_vlist(vanilla_list* vlist, md_t debug_mode);
 vlist_el* vlist_insert_after(vanilla_list* vlist,  vlist_el* el, lst_t value);
 vlist_el* vlist_insert_before(vanilla_list* vlist,  vlist_el* el, lst_t value);
 err_t vlist_delete(vanilla_list* vlist, vlist_el* el);
@@ -36,11 +35,23 @@ void destroy_vlist(vanilla_list* vlist);
 }                                                   \
 while(0)
 
+#ifdef LIST_VERIFICATION
+
 #define VERIFY_LIST(RET) do{                                    \
     if (process_verification(list) != ok)                       \
         return RET;                                             \
 }                                                               \
 while(0)
+
+#else
+
+#define VERIFY_LIST(RET) do{                                    \
+    if (list == NULL)                                           \
+        return RET;                                             \
+}                                                               \
+while(0)
+
+#endif
 
 #define DISPLAY_LIST() do{                                          \
     if (debug_mode == on)                                           \
@@ -54,10 +65,22 @@ while(0)
 }                                                                   \
 while(0)
 
+#ifdef VLIST_VERIFICATION
+
 #define VERIFY_VLIST(RET) do{                                    \
     if (process_vlist_verification(vlist) != ok)                 \
         return RET;                                              \
 }                                                                \
 while(0)
+
+#else
+
+#define VERIFY_VLIST(RET) do{       \
+    if (vlist == NULL)              \
+        return RET;                 \
+}                                   \
+while(0)
+
+#endif
 
 #endif

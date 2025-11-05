@@ -1,17 +1,17 @@
 #include <stdio.h>
+
 #include "list_functions.h"
 #include "image_generator.h"
 #include "list_dump.h"
 
 int main()
 {
-    
-    /*
+    // LIST
+    ///*
     
     lst list = {};
 
-    set_list_debug_mode(&list, on);
-    set_list_verification(&list, off);
+    set_list_debug_mode(&list, off);
 
     if (get_list_debug_mode(&list) == on)
         initialize_list_log(on);
@@ -73,23 +73,25 @@ int main()
     // list.size = 10;
     // insert_after(&list, 5, 60);
 
+    size_t cap = get_list_capacity(&list); 
 
-    for (size_t i = 0; i < get_list_capacity(&list); i++)
+    for (size_t i = 0; i < cap; i++)
     {
         printf("%d\n", list.data[i + 1]);
     }
     list_dtor(&list);
     
-    */
+    //*/
 
+    // VLIST 
+    /*
     md_t debug_mode = on;
-    md_t verification_mode = on;
 
     vanilla_list vlist = {};
 
     initialize_list_log(debug_mode);
 
-    initialise_vlist(&vlist, debug_mode, verification_mode);
+    initialise_vlist(&vlist, debug_mode);
 
     // vlist_el* first = vlist_insert_after(&vlist, NULL, 10);
     // vlist_insert_after(&vlist, first, 20);
@@ -111,11 +113,11 @@ int main()
     vlist_el* second = vlist_insert_after(&vlist, first, 20);
     vlist_el* third = vlist_insert_after(&vlist, second, 30);
 
-    second->next = NULL; // where is the tail?
-
     vlist_insert_after(&vlist, second, 40);
 
     destroy_vlist(&vlist);
+
+    */
 
     fclose(log_ptr);
     return 0;

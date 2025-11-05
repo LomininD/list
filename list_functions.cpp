@@ -266,32 +266,23 @@ size_t get_list_size(lst* list)
 
 size_t get_list_capacity(lst* list)
 {
-    VERIFY_LIST(0);
+    VERIFY_LIST(0); // TODO - do I need verification here?
 
     return list->capacity;
 }
 
 void set_list_debug_mode(lst* list, md_t mode)
 {
-    VERIFY_LIST();
-
-    list->debug_mode = mode;
-}
-
-
-void set_list_verification(lst* list, md_t mode)
-{
-    VERIFY_LIST();
-
-    list->verification = mode;
+    if (list != NULL)
+        list->debug_mode = mode;
 }
 
 
 md_t get_list_debug_mode(lst* list)
 {
-    VERIFY_LIST(off);
-
-    return list->debug_mode;
+    if (list != NULL)
+        return list->debug_mode;
+    return off;
 }
 
 
@@ -343,7 +334,7 @@ vlist_el* create_vlist_element(vanilla_list* vlist)
 
 
 // initialises pre-created vanilla_list structure and returns ok if initialisation was successful
-err_t initialise_vlist(vanilla_list* vlist, md_t debug_mode, md_t verification)
+err_t initialise_vlist(vanilla_list* vlist, md_t debug_mode)
 {
     printf_log_msg(debug_mode, "create_vlist: began initialising vlist\n");
 
@@ -356,7 +347,6 @@ err_t initialise_vlist(vanilla_list* vlist, md_t debug_mode, md_t verification)
     printf_log_msg(debug_mode, "create_vlist: vlist initialised\n");
 
     vlist->debug_mode = debug_mode;
-    vlist->verification = verification;
     vlist->err_stat = ok;
     vlist->head = NULL;
     vlist->tail = NULL;
