@@ -312,7 +312,26 @@ err_t clean_up_list(lst* list)
 }
 
 
+bool is_cleaned_up(lst* list)
+{
+    VERIFY_LIST(false);
 
+    md_t debug_mode = list->debug_mode;
+
+    ssize_t current = 0;
+    while (current != (ssize_t) list->size)
+    {
+        if (list->next[current] != current + 1)
+        {
+            printf_log_msg(debug_mode, "is_cleaned_up: list has not been cleaned up\n");
+            return false;
+        }
+        current++;
+    }
+
+    printf_log_msg(debug_mode, "is_cleaned_up: list has been cleaned up\n");
+    return true;
+}
 
 
 size_t get_list_size(lst* list)

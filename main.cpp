@@ -7,7 +7,7 @@
 int main()
 {
     // LIST
-    /*
+    ///*
     
     lst list = {};
 
@@ -42,23 +42,25 @@ int main()
     // print_dump(&list, diagnostic);
 
     // LOTS OF INSERTIONS
-    // insert_after(&list, 0, 50);
-    // insert_after(&list, 1, 10);
-    // insert_before(&list, 1, 40);
-    // insert_after(&list, 1, 10);
-    // insert_before(&list, 1, 40);
-    // insert_after(&list, 1, 10);
-    // insert_before(&list, 1, 40);
-    // insert_after(&list, 1, 10);
-    // insert_before(&list, 1, 40);
-    // insert_after(&list, 1, 10);
-    // insert_before(&list, 1, 40);
-    // insert_after(&list, 1, 10);
-    // insert_before(&list, 1, 40);
-    // insert_after(&list, 1, 10);
-    // insert_before(&list, 1, 40);
-    // clean_up_list(&list);
-    // print_dump(&list, diagnostic);
+    insert_after(&list, 0, 50);
+    insert_after(&list, 1, 10);
+    insert_before(&list, 1, 40);
+    insert_after(&list, 1, 10);
+    insert_before(&list, 1, 40);
+    insert_after(&list, 1, 10);
+    insert_before(&list, 1, 40);
+    insert_after(&list, 1, 10);
+    insert_before(&list, 1, 40);
+    insert_after(&list, 1, 10);
+    insert_before(&list, 1, 40);
+    insert_after(&list, 1, 10);
+    insert_before(&list, 1, 40);
+    insert_after(&list, 1, 10);
+    insert_before(&list, 1, 40);
+    is_cleaned_up(&list);
+    clean_up_list(&list);
+    is_cleaned_up(&list);
+    print_dump(&list, diagnostic);
     
 
     // SEVERELY CORRUPTED STRUCTURE
@@ -82,8 +84,10 @@ int main()
     }
     list_dtor(&list);
     
-    */
+    //*/
 
+
+    /*
     // VLIST 
     
     md_t debug_mode = on;
@@ -94,6 +98,7 @@ int main()
 
     initialise_vlist(&vlist, debug_mode);
 
+    // TEST PROGRAM 1
     // vlist_el* first = vlist_insert_after(&vlist, NULL, 10);
     // vlist_insert_after(&vlist, first, 20);
     // vlist_el* just_el = vlist_insert_after(&vlist, first, 30);
@@ -103,6 +108,7 @@ int main()
     // vlist_delete(&vlist, just_el);
     // vlist_delete(&vlist, first);
 
+    // TEST PROGRAM 2
     // vlist_el* first = vlist_insert_after(&vlist, NULL, 10);
     // vlist_el* second = vlist_insert_after(&vlist, first, 20);
     // vlist_el* third = vlist_insert_after(&vlist, second, 30);
@@ -110,13 +116,15 @@ int main()
     // vlist_delete(&vlist, third);
     // vlist_delete(&vlist, first);
 
-    vlist_el* first = vlist_insert_after(&vlist, NULL, 10);
-    vlist_el* second = vlist_insert_after(&vlist, first, 20);
-    vlist_el* third = vlist_insert_after(&vlist, second, 30);
+    // TEST PROGRAM 3
+    // vlist_el* first = vlist_insert_after(&vlist, NULL, 10);
+    // vlist_el* second = vlist_insert_after(&vlist, first, 20);
+    // vlist_el* third = vlist_insert_after(&vlist, second, 30);
 
-    vlist_insert_after(&vlist, second, 40);
+    // vlist_insert_after(&vlist, second, 40);
 
     destroy_vlist(&vlist);
+    */
 
     
 
