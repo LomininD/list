@@ -19,19 +19,20 @@ int main()
     list_ctor(&list, 10);
 
     // TEST ERROR PROGRAM    
-//     insert_after(&list, 0, 10);
-//     insert_after(&list, 1, 20);
-//     insert_after(&list, 2, 30);
-//     insert_after(&list, 3, 40);
-//     insert_after(&list, 4, 500);
-//     insert_after(&list, 5, 600);
-//     insert_after(&list, 6, 700);
-//     insert_after(&list, 7, 800);
-// 
-//     list.next[7] = 5;
-//     list.prev[6] = 300;
-// 
-//     insert_after(&list, 8, 900);
+    insert_after(&list, 0, 10);
+    insert_after(&list, 1, 20);
+    insert_after(&list, 2, 30);
+    insert_after(&list, 3, 40);
+    insert_after(&list, 4, 500);
+    insert_after(&list, 5, 600);
+    insert_after(&list, 6, 700);
+    insert_after(&list, 7, 800);
+
+    list.next[7] = 5;
+    list.prev[6] = 300;
+    list.prev[3] = 1;
+
+    insert_after(&list, 8, 900);
 
     //WORKING LIST
     // insert_after(&list, 0, 20);
@@ -41,40 +42,37 @@ int main()
     // //clean_up_list(&list);
     // print_dump(&list, diagnostic);
 
-    // LOTS OF INSERTIONS
-    insert_after(&list, 0, 50);
-    insert_after(&list, 1, 10);
-    insert_before(&list, 1, 40);
-    insert_after(&list, 1, 10);
-    insert_before(&list, 1, 40);
-    insert_after(&list, 1, 10);
-    insert_before(&list, 1, 40);
-    insert_after(&list, 1, 10);
-    insert_before(&list, 1, 40);
-    insert_after(&list, 1, 10);
-    insert_before(&list, 1, 40);
-    insert_after(&list, 1, 10);
-    insert_before(&list, 1, 40);
-    insert_after(&list, 1, 10);
-    insert_before(&list, 1, 40);
-    is_cleaned_up(&list);
-    clean_up_list(&list);
-    is_cleaned_up(&list);
-    print_dump(&list, diagnostic);
-    
-
-    // SEVERELY CORRUPTED STRUCTURE
     // insert_after(&list, 0, 10);
     // insert_after(&list, 1, 20);
     // insert_after(&list, 2, 30);
     // insert_after(&list, 3, 40);
     // insert_after(&list, 4, 50);
-    // insert_after(&list, 5, 60);
-    // list.prev[4] = -100;
-    // list.next[6] = 2;
-    // list.capacity = 3;
-    // list.size = 10;
-    // insert_after(&list, 5, 60);
+    // //insert_after(&list, 1, 100);
+    // push_back(&list, 25);
+    // clean_up_list(&list);
+
+
+    // LOTS OF INSERTIONS
+    // insert_after(&list, 0, 50);
+    // insert_after(&list, 1, 10);
+    // insert_before(&list, 1, 40);
+    // insert_after(&list, 1, 10);
+    // insert_before(&list, 1, 40);
+    // insert_after(&list, 1, 10);
+    // insert_before(&list, 1, 40);
+    // insert_after(&list, 1, 10);
+    // insert_before(&list, 1, 40);
+    // insert_after(&list, 1, 10);
+    // insert_before(&list, 1, 40);
+    // insert_after(&list, 1, 10);
+    // insert_before(&list, 1, 40);
+    // insert_after(&list, 1, 10);
+    // insert_before(&list, 1, 40);
+    // // is_cleaned_up(&list);
+    // // clean_up_list(&list);
+    // // is_cleaned_up(&list);
+    // print_dump(&list, diagnostic);
+    
 
     size_t cap = get_list_capacity(&list); 
 
@@ -107,6 +105,7 @@ int main()
     // vlist_insert_before(&vlist, just_el, 60);
     // vlist_delete(&vlist, just_el);
     // vlist_delete(&vlist, first);
+    // print_vlist_dump(&vlist, diagnostic);
 
     // TEST PROGRAM 2
     // vlist_el* first = vlist_insert_after(&vlist, NULL, 10);
@@ -117,11 +116,15 @@ int main()
     // vlist_delete(&vlist, first);
 
     // TEST PROGRAM 3
-    // vlist_el* first = vlist_insert_after(&vlist, NULL, 10);
-    // vlist_el* second = vlist_insert_after(&vlist, first, 20);
-    // vlist_el* third = vlist_insert_after(&vlist, second, 30);
-
-    // vlist_insert_after(&vlist, second, 40);
+//     vlist_el* first = vlist_insert_after(&vlist, NULL, 50);
+//     vlist_el* second = vlist_insert_after(&vlist, first, 40);
+//     vlist_el* third = vlist_insert_after(&vlist, second, 60);
+// 
+//     vlist_el* fourth = vlist_insert_after(&vlist, third, 20);
+// 
+//     second->prev = fourth;
+// 
+//     vlist_insert_after(&vlist, fourth, 100);
 
     destroy_vlist(&vlist);
     */

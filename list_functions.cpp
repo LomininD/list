@@ -187,6 +187,50 @@ ssize_t insert_after(lst* list, ssize_t pos, lst_t el)
 }
 
 
+ssize_t push_front(lst* list, lst_t el)
+{
+    VERIFY_LIST(-1);
+    
+    md_t debug_mode = list->debug_mode;
+
+    printf_log_msg(debug_mode, "push_front: began insertion of %d after head index %zd\n", el, list->next[0]);
+    printf_log_msg(debug_mode, "capacity = %zu, size = %zu\n", list->capacity, list->size);
+
+
+    printf_log_msg(debug_mode, "push_front: redirecting function call to insert before %zd", list->next[0]);
+
+    ssize_t insertion_pos = insert_before(list, list->next[0], el);
+
+    VERIFY_LIST(-1);
+
+    printf_log_msg(debug_mode, "push_front: insertion finished\n");
+
+    return insertion_pos;
+}
+
+
+ssize_t push_back(lst* list, lst_t el)
+{
+    VERIFY_LIST(-1);
+    
+    md_t debug_mode = list->debug_mode;
+
+    printf_log_msg(debug_mode, "push_back: began insertion of %d before tail index %zd\n", el, list->prev[0]);
+    printf_log_msg(debug_mode, "capacity = %zu, size = %zu\n", list->capacity, list->size);
+
+
+    printf_log_msg(debug_mode, "push_back: redirecting function call to insert after %zd", list->prev[0]);
+
+    ssize_t insertion_pos = insert_after(list, list->prev[0], el);
+
+    VERIFY_LIST(-1);
+
+    printf_log_msg(debug_mode, "push_back: insertion finished\n");
+
+    return insertion_pos;
+}
+
+
 ssize_t insert_before(lst* list, ssize_t pos, lst_t el)
 {
     VERIFY_LIST(-1);

@@ -343,7 +343,7 @@ void print_vlist_dump(const vanilla_list* vlist, dump_purpose purpose)
     size_t count = 0;
     vlist_el* current_el = vlist->head;
 
-    while (count < vlist->size)
+    while (count < vlist->size && current_el != NULL)
     {
         count++;
         printf_log_msg(debug_mode, "element [%p]: data = ", current_el);

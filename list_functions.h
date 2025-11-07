@@ -11,6 +11,8 @@ err_t list_ctor(lst* list, size_t capacity);
 
 ssize_t insert_after(lst* list, ssize_t pos, lst_t el);
 ssize_t insert_before(lst* list, ssize_t pos, lst_t el);
+ssize_t push_front(lst* list, lst_t el);
+ssize_t push_back(lst* list, lst_t el);
 err_t delete_ind(lst* list, ssize_t pos);
 err_t clean_up_list(lst* list);
 bool is_cleaned_up(lst* list);
