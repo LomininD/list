@@ -160,7 +160,8 @@ void connect_nodes(FILE* fp, const lst* list)
             {
                 if (list->prev[list->next[i]] == i)
                 {
-                    fprintf(fp, "%zu->%zd [weight = 0, penwidth = 1, constraint = false, color = \"#88C809\", dir = both]\n", i, list->next[i]);
+                    if (list->next[list->next[i]] != i || (list->next[list->next[i]] == i && i < list->next[i]))
+                        fprintf(fp, "%zu->%zd [weight = 0, penwidth = 1, constraint = false, color = \"#88C809\", dir = both]\n", i, list->next[i]);
                 }
                 else
                 {

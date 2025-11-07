@@ -19,37 +19,37 @@ int main()
     list_ctor(&list, 10);
 
     // TEST ERROR PROGRAM    
+//     insert_after(&list, 0, 10);
+//     insert_after(&list, 1, 20);
+//     insert_after(&list, 2, 30);
+//     insert_after(&list, 3, 40);
+//     insert_after(&list, 4, 500);
+//     insert_after(&list, 5, 600);
+//     insert_after(&list, 6, 700);
+//     insert_after(&list, 7, 800);
+// 
+//     list.next[7] = 5;
+//     list.prev[6] = 300;
+//     list.prev[3] = 1;
+// 
+//     insert_after(&list, 8, 900);
+
+    //WORKING LIST
+    insert_after(&list, 0, 20);
+    insert_after(&list, 1, 30);
+    insert_before(&list, 1, 10);
+    delete_ind(&list, 2);
+    //clean_up_list(&list);
+    print_dump(&list, diagnostic);
+
     insert_after(&list, 0, 10);
     insert_after(&list, 1, 20);
     insert_after(&list, 2, 30);
     insert_after(&list, 3, 40);
-    insert_after(&list, 4, 500);
-    insert_after(&list, 5, 600);
-    insert_after(&list, 6, 700);
-    insert_after(&list, 7, 800);
-
-    list.next[7] = 5;
-    list.prev[6] = 300;
-    list.prev[3] = 1;
-
-    insert_after(&list, 8, 900);
-
-    //WORKING LIST
-    // insert_after(&list, 0, 20);
-    // insert_after(&list, 1, 30);
-    // insert_before(&list, 1, 10);
-    // delete_ind(&list, 2);
-    // //clean_up_list(&list);
-    // print_dump(&list, diagnostic);
-
-    // insert_after(&list, 0, 10);
-    // insert_after(&list, 1, 20);
-    // insert_after(&list, 2, 30);
-    // insert_after(&list, 3, 40);
-    // insert_after(&list, 4, 50);
-    // //insert_after(&list, 1, 100);
-    // push_back(&list, 25);
-    // clean_up_list(&list);
+    insert_after(&list, 4, 50);
+    //insert_after(&list, 1, 100);
+    push_back(&list, 25);
+    clean_up_list(&list);
 
 
     // LOTS OF INSERTIONS
