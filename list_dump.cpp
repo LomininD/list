@@ -304,7 +304,7 @@ err_t process_vlist_verification(const vanilla_list* vlist)
     {                                                               
         printf(MAKE_BOLD_RED("\nverification failed\n"));             
         print_vlist_dump(vlist, program_failure); 
-        vlist_generate_dump_image(vlist);                         
+        //vlist_generate_dump_image(vlist);                         
         return error;                                               
     }                                                               
     else                                                            

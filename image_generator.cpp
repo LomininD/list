@@ -110,38 +110,6 @@ void draw_arrows(FILE* fp, const lst* list)
     //fprintf(fp, "{\n");
     fprintf(fp, "edge[color = \"red\", weight = 0, penwidth = 3, constraint = false]\n");
 
-    connect_nodes(fp, list);
-    // fprintf(fp, "edge[color = \"#45503B\", weight = 0, penwidth = 1, constraint = false]\n");
-    // 
-    // for (size_t i = 0; i < list->capacity; i++)
-    // {
-    //     if (list->prev[i] == -1)
-    //         fprintf(fp, "%zu->%zd\n", i, list->next[i]);
-    // }
-
-//     fprintf(fp, "}\n\n");
-// 
-//     fprintf(fp, "{\n");
-//     fprintf(fp, "edge[color = \"#FAA18F\", weight = 0, penwidth = 1, constraint = false]\n");
-// 
-//     connect_nodes(fp, list, ltor);
-// 
-//     fprintf(fp, "}\n\n");
-// 
-//     fprintf(fp, "{\n");
-//     fprintf(fp, "edge[color = \"#D5486B\", weight = 0, penwidth = 1, constraint = false]\n");
-//     
-//     connect_nodes(fp, list, rtol);
-
-    //fprintf(fp, "}\n\n");
-}
-
-
-void connect_nodes(FILE* fp, const lst* list)
-{
-    assert(fp != NULL);
-    assert(list != NULL);
-
     for (ssize_t i = 0; i <= (ssize_t) list->capacity; i++)
     {
         if (list->prev[i] == -1)
@@ -234,50 +202,44 @@ void vlist_list_items(FILE* fp, const vanilla_list* vlist)
     assert(vlist != NULL);
 
     fprintf(fp, "{\n");
-    fprintf(fp, "edge[color=\"#FAA18F\", weight = 100]\n");
+    fprintf(fp, "edge[color=\"white\", weight = 100, len = 0]\n");
 
-    const vlist_el* current_element = (const vlist_el*) vlist->head;
+    vlist_el* current = vlist->head;
     size_t node_count = 0;
 
-    while (current_element != NULL && node_count < vlist->size)
+    while (current != NULL && node_count < vlist->size)
     {
-        fprintf(fp, "NODE_%p [label = \"ptr = %p | ", current_element, current_element);
         
-        if (current_element->data == poison_value)
-            fprintf(fp, "value = %x", current_element->data);
+        fprintf(fp, "NODE_%p [label = \"ptr = %p | ", current, current);
+        if (current->data == poison_value)
+            fprintf(fp, "value = %x", current->data);
         else
-            fprintf(fp, "value = %d", current_element->data);
-
+            fprintf(fp, "value = %d", current-> data);
+        
         fprintf(fp, " | { prev = %p | next = %p }\", shape = Mrecord, style = filled, " \
-                "fillcolor = \"#C0C0C0\", fontcolor = \"black\"]\n", current_element->prev, \
-                                                                        current_element->next);
-        
-        
-        
-        if (current_element->next != NULL)
-            fprintf(fp, "NODE_%p->NODE_%p\n", current_element, current_element->next);
+                                            "fillcolor = \"#C0C0C0\", fontcolor = \"black\"]\n",\
+                                              current->prev, current->next);
 
-        if (current_element->prev != NULL)
-            fprintf(fp, "NODE_%p->NODE_%p[color=\"green\"]\n", current_element, current_element->prev);
-        
-        
-
-        if (current_element == vlist->head)
+        if (current->next != NULL)
         {
-            fprintf(fp, "HEAD [shape = invhouse; label = \"head\"; fontcolor = \"black\"; fillcolor = \"#FAA18F \"]\n");
-            fprintf(fp, "{rank = same; HEAD; NODE_%p}\n\n", current_element);
+            fprintf(fp, "NODE_%p->NODE_%p\n", current, current->next);
+            if (current->next->prev == current)
+            {
+                fprintf(fp, "NODE_%p->NODE_%p [constraint = false, dir = both, color = \"#88C809\"]\n", current, current->next);
+            }
+            else
+            {
+                fprintf(fp, "NODE_%p->NODE_%p [constraint = false, color = \"#FAA18F\"]\n", current, current->next);
+                if (current->next->prev != NULL && current->next->prev->next != current->next)
+                    fprintf(fp, "NODE_%p->NODE_%p [constraint = false, color = \"#D5486B\"]\n", current->next, current->next->prev);
+            }
         }
 
-        if (current_element == vlist->tail)
-        {
-            fprintf(fp, "TAIL [shape = invhouse; label = \"tail\"; fillcolor = \"#D5486B\"]\n");
-            fprintf(fp, "{rank = same; TAIL; NODE_%p}\n\n", current_element);
-        }
-
-        current_element = current_element->next;
         node_count++;
+        current = current->next;
     }
-    
 
     fprintf(fp, "}\n\n");
 }
+
+// TODO: color highlight 
