@@ -13,8 +13,9 @@ void fill_preamble(FILE* fp);
 void put_pointers(FILE* fp, const lst* list);
 void draw_arrows(FILE* fp, const lst* list);
 
-void vlist_generate_dump_image(const vanilla_list* vlist);
-void vlist_list_items(FILE* fp, const vanilla_list* vlist);
+void vlist_generate_dump_image(const vanilla_list* vlist, vlist_el* highlighted_pos);
+void vlist_list_items(FILE* fp, const vanilla_list* vlist, vlist_el* highlighted_pos);
+int hash(long long int ptr);
 
 const size_t file_name_size = 64;
 const size_t sys_str_size = 200;

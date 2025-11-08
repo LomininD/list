@@ -182,7 +182,7 @@ bool check_ind(const lst* list, ssize_t ind)
 }
 
 
-void vlist_generate_dump_image(const vanilla_list* vlist)
+void vlist_generate_dump_image(const vanilla_list* vlist, vlist_el* highlighted_pos)
 {
     assert(vlist != NULL);
 
@@ -199,7 +199,7 @@ void vlist_generate_dump_image(const vanilla_list* vlist)
     fprintf(fp, "{\n");
 
     fill_preamble(fp);
-    vlist_list_items(fp, vlist);
+    vlist_list_items(fp, vlist, highlighted_pos);
 
     fprintf(fp, "}\n");
 
@@ -212,7 +212,7 @@ void vlist_generate_dump_image(const vanilla_list* vlist)
 }
 
 
-void vlist_list_items(FILE* fp, const vanilla_list* vlist)
+void vlist_list_items(FILE* fp, const vanilla_list* vlist, vlist_el* highlighted_pos)
 {
     assert(fp != NULL);
     assert(vlist != NULL);
@@ -225,16 +225,19 @@ void vlist_list_items(FILE* fp, const vanilla_list* vlist)
 
     while (current != NULL && node_count < vlist->size)
     {
-        
-        fprintf(fp, "NODE_%p [label = \"ptr = %p | ", current, current);
+        fprintf(fp, "NODE_%p [label = <<TABLE BORDER=\"0\" CELLBORDER=\"1\"><TR><TD COLSPAN=\"2\">ptr =<FONT color = \"#%x\"> %p </FONT></TD></TR>", current, hash((long long int) current), current);
         if (current->data == poison_value)
-            fprintf(fp, "value = %x", current->data);
+            fprintf(fp, "<TR><TD COLSPAN=\"2\">value = %x</TD></TR>", current->data);
         else
-            fprintf(fp, "value = %d", current-> data);
+            fprintf(fp, "<TR><TD COLSPAN=\"2\">value = %d</TD></TR>", current-> data);
         
-        fprintf(fp, " | { prev = %p | next = %p }\", shape = Mrecord, style = filled, " \
-                                            "fillcolor = \"#C0C0C0\", fontcolor = \"black\"]\n",\
-                                              current->prev, current->next);
+        fprintf(fp, "<TR><TD> prev =<FONT color = \"#%x\"> %p </FONT></TD><TD> next =<FONT color = \"#%x\"> %p </FONT></TD></TR></TABLE>>, shape = Mrecord, style = filled, ",\
+                                                                     hash((long long int) current->prev), current->prev, hash((long long int) current->next), current->next);
+
+        if (highlighted_pos == current)
+            fprintf(fp, "fillcolor = \"#C6F990\", fontcolor = \"black\"]\n");
+        else
+            fprintf(fp, "fillcolor = \"#C0C0C0\", fontcolor = \"black\"]\n");
 
         if (current->next != NULL)
         {
@@ -258,4 +261,28 @@ void vlist_list_items(FILE* fp, const vanilla_list* vlist)
     fprintf(fp, "}\n\n");
 }
 
-// TODO: color highlight 
+
+int hash(long long int ptr)
+{
+    int hashed = 0;
+
+    if (ptr == 0)
+    {
+        return 16711680;
+    }
+
+    while (ptr != 0)
+    {
+        hashed += (7717 * (ptr % 10) % 1013 + 349) * 147867;
+        ptr /= 10; 
+    }
+
+    hashed %= 16777215;
+
+    return hashed;
+}
+
+// #e943d8
+// #373176
+// #88f09b
+// #e57250

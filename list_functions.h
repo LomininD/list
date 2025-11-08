@@ -81,9 +81,9 @@ while(0)
 
 #endif
 
-#define DISPLAY_VLIST() do{                                         \
+#define DISPLAY_VLIST(HIGHLIGHTED) do{                              \
     if (debug_mode == on)                                           \
-        vlist_generate_dump_image(vlist);                           \
+        vlist_generate_dump_image(vlist, HIGHLIGHTED);              \
 }                                                                   \
 while(0)
 

@@ -7,7 +7,7 @@
 int main()
 {
     // LIST
-    ///*
+    /*
     
     lst list = {};
 
@@ -82,10 +82,10 @@ int main()
     }
     list_dtor(&list);
     
-    //*/
+    */
 
 
-    /*
+    ///*
     // VLIST 
     
     md_t debug_mode = on;
@@ -108,28 +108,26 @@ int main()
     // print_vlist_dump(&vlist, diagnostic);
 
     // TEST PROGRAM 2
-    // vlist_el* first = vlist_insert_after(&vlist, NULL, 10);
-    // vlist_el* second = vlist_insert_after(&vlist, first, 20);
-    // vlist_el* third = vlist_insert_after(&vlist, second, 30);
-    // vlist_delete(&vlist, second);
-    // vlist_delete(&vlist, third);
-    // vlist_delete(&vlist, first);
+    vlist_el* first = vlist_insert_after(&vlist, NULL, 10);
+    vlist_el* second = vlist_insert_after(&vlist, first, 20);
+    vlist_el* third = vlist_insert_after(&vlist, second, 30);
+    vlist_delete(&vlist, second);
+    vlist_delete(&vlist, third);
+    vlist_delete(&vlist, first);
 
     // TEST PROGRAM 3
-    vlist_el* first = vlist_insert_after(&vlist, NULL, 50);
-    vlist_el* second = vlist_insert_after(&vlist, first, 40);
-    vlist_el* third = vlist_insert_after(&vlist, second, 60);
-
-    vlist_el* fourth = vlist_insert_after(&vlist, third, 20);
-
-    second->prev = fourth;
-
-    vlist_insert_after(&vlist, fourth, 100);
-
-    destroy_vlist(&vlist);
-    */
-
-    
+//     vlist_el* first = vlist_insert_after(&vlist, NULL, 50);
+//     vlist_el* second = vlist_insert_after(&vlist, first, 40);
+//     vlist_el* third = vlist_insert_after(&vlist, second, 60);
+// 
+//     vlist_el* fourth = vlist_insert_after(&vlist, third, 20);
+// 
+//     second->prev = fourth;
+// 
+//     vlist_insert_after(&vlist, fourth, 100);
+// 
+//     destroy_vlist(&vlist);
+    //*/
 
     fclose(log_ptr);
     return 0;

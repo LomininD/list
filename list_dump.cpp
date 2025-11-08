@@ -359,7 +359,7 @@ void print_vlist_dump(const vanilla_list* vlist, dump_purpose purpose)
 
     printf_log_bold(debug_mode, "\n===========================================================================\n\n", NULL);
 
-    vlist_generate_dump_image(vlist);
+    vlist_generate_dump_image(vlist, NULL);
 }
 
 

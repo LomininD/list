@@ -529,7 +529,7 @@ vlist_el* vlist_insert_after(vanilla_list* vlist,  vlist_el* el, lst_t value)
 
     printf_log_msg(debug_mode, "vlist_insert_after: inserted element [%p]\n", new_el);
 
-    DISPLAY_VLIST();
+    DISPLAY_VLIST(new_el);
 
     return new_el;
 }
@@ -571,7 +571,7 @@ err_t vlist_delete(vanilla_list* vlist, vlist_el* el)
 
     printf_log_msg(debug_mode, "vlist_delete: deleted element [%p]\n", el);
     
-    DISPLAY_VLIST();
+    DISPLAY_VLIST(NULL);
 
     return ok;
 }
