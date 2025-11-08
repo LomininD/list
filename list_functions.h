@@ -57,9 +57,9 @@ while(0)
 
 #endif
 
-#define DISPLAY_LIST() do{                                          \
+#define DISPLAY_LIST(HIGHLIGHT) do{                                 \
     if (debug_mode == on)                                           \
-        generate_dump_image(list);                                  \
+        generate_dump_image(list, HIGHLIGHT);                       \
 }                                                                   \
 while(0)
 

@@ -6,9 +6,9 @@
 #include "debug.h"
 
 
-void generate_dump_image(const lst* list);
+void generate_dump_image(const lst* list, ssize_t highlighted_pos);
 void convert_to_image(char* code_file_name, char* image_file_name);
-void list_items(FILE* fp, const lst* list);
+void list_items(FILE* fp, const lst* list, ssize_t highlighted_pos);
 void fill_preamble(FILE* fp);
 void put_pointers(FILE* fp, const lst* list);
 void draw_arrows(FILE* fp, const lst* list);

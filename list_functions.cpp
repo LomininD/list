@@ -181,7 +181,7 @@ ssize_t insert_after(lst* list, ssize_t pos, lst_t el)
 
     printf_log_msg(debug_mode, "insert_after: insertion finished\n");
     
-    DISPLAY_LIST();
+    DISPLAY_LIST(insertion_pos);
 
     return insertion_pos;
 }
@@ -284,7 +284,7 @@ err_t delete_ind(lst* list, ssize_t pos)
 
     printf_log_msg(debug_mode, "delete_ind: deleting finished\n");
     
-    DISPLAY_LIST();
+    DISPLAY_LIST(pos);
         
     return ok;
 }
@@ -350,7 +350,7 @@ err_t clean_up_list(lst* list)
 
     printf_log_msg(debug_mode, "clean_up_list: done cleaning up list\n");
 
-    DISPLAY_LIST();
+    DISPLAY_LIST(-1);
 
     return ok;
 }

@@ -163,7 +163,7 @@ void print_dump(const lst* list, dump_purpose purpose)
 
     printf_log_bold(debug_mode, "\n===========================================================================\n\n", NULL);
 
-    generate_dump_image(list);
+    generate_dump_image(list, -1);
 }
 
 void put_number(ssize_t number, md_t debug_mode)

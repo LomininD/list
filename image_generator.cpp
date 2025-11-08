@@ -4,7 +4,7 @@
 static bool check_ind(const lst* list, ssize_t ind);
 
 
-void generate_dump_image(const lst* list)
+void generate_dump_image(const lst* list, ssize_t highlighted_pos)
 {
     static unsigned long long image_count = 0; // size_t?
 
@@ -19,7 +19,7 @@ void generate_dump_image(const lst* list)
     fprintf(fp, "{\n");
 
     fill_preamble(fp);
-    list_items(fp, list);
+    list_items(fp, list, highlighted_pos);
     put_pointers(fp, list);
     draw_arrows(fp, list);
 
@@ -59,7 +59,7 @@ void fill_preamble(FILE* fp)
 }
 
 
-void list_items(FILE* fp, const lst* list)
+void list_items(FILE* fp, const lst* list, ssize_t highlighted_pos)
 {
     assert(fp != NULL);
     assert(list != NULL);
@@ -69,14 +69,30 @@ void list_items(FILE* fp, const lst* list)
 
     for(size_t i = 0; i < list->capacity + 1; i++)
     {
+        fprintf(fp, "%zu [rank = %zu, label = \"ind = %zu | ", i, i, i);
+
         if (list->data[i] == poison_value)
-            fprintf(fp, "%zu [rank = %zu, label = \"ind = %zu | value = %x | { prev = %zd | next = %zd }\", \
-                                   shape = Mrecord, style = filled, fillcolor = \"#C0C0C0\", fontcolor = \"black\"]\n", i, i, i, \
-                                                                list->data[i], list->prev[i], list->next[i]);
+            fprintf(fp, "value = %x", list->data[i]);
         else
-            fprintf(fp, "%zu [rank = %zu, label = \"ind = %zu | value = %d | { prev = %zd | next = %zd }\", \
-                                   shape = Mrecord, style = filled, fillcolor = \"#F0F990\", fontcolor = \"black\"]\n", i, i, i, \
-                                                                list->data[i], list->prev[i], list->next[i]);
+            fprintf(fp, "value = %d", list->data[i]);
+
+        fprintf(fp, " | { prev = %zd | next = %zd }\", shape = Mrecord, style = filled," \
+                                            " fontcolor = \"black\", ", list->prev[i], list->next[i]);
+
+        if (highlighted_pos == (ssize_t) i)
+        {
+            if (list->data[i] == poison_value)
+                fprintf(fp, "fillcolor = \"#BA8484\"]\n");
+            else
+                fprintf(fp, "fillcolor = \"#C6F990\"]\n");
+        }
+        else
+        {
+            if (list->data[i] == poison_value)
+                fprintf(fp, "fillcolor = \"#C0C0C0\"]\n");
+            else
+                fprintf(fp, "fillcolor = \"#F0F990\"]\n");
+        }
     }
     
     for (size_t i = 0; i < list->capacity; i++)
