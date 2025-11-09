@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <math.h>
+#include <time.h>
 
 #include "list_functions.h"
 #include "image_generator.h"
@@ -6,6 +8,51 @@
 
 int main()
 {
+    ///*
+
+    // TIME COMPARASION 
+
+    lst list = {};
+    set_list_debug_mode(&list, off);
+    list_ctor(&list, 10);
+
+    vanilla_list vlist = {};
+    initialise_vlist(&vlist, off);
+
+    for (int i = 3; i < 10; i++)
+    {
+        clock_t start = clock();
+        //printf("%lu\n", start);
+        for (long long int j = 0; j < pow(10, i); j++)
+        {
+            ssize_t ind = insert_after(&list, 0, 10);
+            delete_ind(&list, ind);
+        }
+        clock_t finish = clock();
+        //printf("%lu\n", finish);
+        printf("LIST: number of iterations = 10^%d, delta = %lu\n\n", i, finish - start);
+    }
+
+    for (int i = 3; i < 10; i++)
+    {
+        clock_t start = clock();
+        //printf("%lu\n", start);
+        for (long long int j = 0; j < pow(10, i); j++)
+        {
+            vlist_el* ptr = vlist_insert_after(&vlist, NULL, 10);
+            vlist_delete(&vlist, ptr);
+        }
+        clock_t finish = clock();
+        //printf("%lu\n", finish);
+        printf("VLIST: number of iterations = 10^%d, delta = %lu\n\n", i, finish - start);
+    }
+
+
+    list_dtor(&list);
+    destroy_vlist(&vlist);
+    //*/
+    
+    
     // LIST
     /*
     
@@ -85,7 +132,7 @@ int main()
     */
 
 
-    ///*
+    /*
     // VLIST 
     
     md_t debug_mode = on;
@@ -127,9 +174,9 @@ int main()
 //     vlist_insert_after(&vlist, fourth, 100);
 // 
 //     destroy_vlist(&vlist);
-    //*/
+    */
 
-    fclose(log_ptr);
+    //fclose(log_ptr);
     return 0;
 }
 

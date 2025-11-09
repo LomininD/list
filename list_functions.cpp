@@ -6,9 +6,9 @@ static err_t allocate_list_memory(lst* list, size_t capacity);
 static err_t reallocate_list_memory(lst* list);
 
 vlist_el* create_vlist_element(vanilla_list* vlist);
-// static void destroy_vlist_element(vlist_el* vlist);
 
 
+// initializes list and returns ok on success
 err_t list_ctor(lst* list, size_t capacity)
 {
     if (list == NULL)
@@ -36,6 +36,7 @@ err_t list_ctor(lst* list, size_t capacity)
 }
 
 
+// fills log file basic information 
 void initialize_list_log(md_t debug_mode)
 {
     log_ptr = fopen("list_log.html", "w");
@@ -44,6 +45,7 @@ void initialize_list_log(md_t debug_mode)
 }
 
 
+// allocates memory for list arrays (data, next, prev) returns ok on success
 err_t allocate_list_memory(lst* list, size_t capacity)
 {
     md_t debug_mode = list->debug_mode;
@@ -79,14 +81,13 @@ err_t allocate_list_memory(lst* list, size_t capacity)
     list->prev[0] = 0;
     list->next[list->capacity] = 0;
 
-    //VERIFY_LIST(error);
-
     printf_log_msg(debug_mode, "allocate_list_memory: done memory allocation\n");
 
     return ok;
 }
 
 
+// reallocates memory for list arrays (data, prev, next) returns ok on success
 err_t reallocate_list_memory(lst* list)
 {
     VERIFY_LIST(error);
@@ -148,6 +149,7 @@ err_t reallocate_list_memory(lst* list)
 }
 
 
+// inserts after determined index returns index of inserted element on success and -1 on failure
 ssize_t insert_after(lst* list, ssize_t pos, lst_t el)
 {
     VERIFY_LIST(-1);
@@ -187,6 +189,7 @@ ssize_t insert_after(lst* list, ssize_t pos, lst_t el)
 }
 
 
+// inserts element before head of list
 ssize_t push_front(lst* list, lst_t el)
 {
     VERIFY_LIST(-1);
@@ -209,6 +212,7 @@ ssize_t push_front(lst* list, lst_t el)
 }
 
 
+// inserts element after tail of list
 ssize_t push_back(lst* list, lst_t el)
 {
     VERIFY_LIST(-1);
@@ -231,6 +235,7 @@ ssize_t push_back(lst* list, lst_t el)
 }
 
 
+// inserts before determined index, returns index of inserted element on success and -1 on failure
 ssize_t insert_before(lst* list, ssize_t pos, lst_t el)
 {
     VERIFY_LIST(-1);
@@ -257,6 +262,7 @@ ssize_t insert_before(lst* list, ssize_t pos, lst_t el)
 }
 
 
+// deletes element on determined index
 err_t delete_ind(lst* list, ssize_t pos)
 {
     VERIFY_LIST(error);
@@ -290,6 +296,7 @@ err_t delete_ind(lst* list, ssize_t pos)
 }
 
 
+// sorts list in linear order 
 err_t clean_up_list(lst* list)
 {
     VERIFY_LIST(error);
@@ -356,6 +363,7 @@ err_t clean_up_list(lst* list)
 }
 
 
+// checks if list is sorted
 bool is_cleaned_up(lst* list)
 {
     VERIFY_LIST(false);
@@ -378,6 +386,7 @@ bool is_cleaned_up(lst* list)
 }
 
 
+// returns list size
 size_t get_list_size(lst* list)
 {
     VERIFY_LIST(0);
@@ -386,13 +395,16 @@ size_t get_list_size(lst* list)
 }
 
 
+// returns list capacity
 size_t get_list_capacity(lst* list)
 {
-    VERIFY_LIST(0); // TODO - do I need verification here?
+    VERIFY_LIST(0);
 
     return list->capacity;
 }
 
+
+// sets debug mode for list
 void set_list_debug_mode(lst* list, md_t mode)
 {
     if (list != NULL)
@@ -400,6 +412,7 @@ void set_list_debug_mode(lst* list, md_t mode)
 }
 
 
+// returns lists debug_mode
 md_t get_list_debug_mode(lst* list)
 {
     if (list != NULL)
@@ -408,6 +421,7 @@ md_t get_list_debug_mode(lst* list)
 }
 
 
+// destroys list
 err_t list_dtor(lst* list)
 {
     if (list == NULL)
@@ -416,7 +430,6 @@ err_t list_dtor(lst* list)
         return error;
     }
     
-    //extern md_t debug_mode;
     md_t debug_mode = list->debug_mode;
 
     printf_log_msg(debug_mode, "list_dtor: began termination\n");

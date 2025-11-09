@@ -2,6 +2,13 @@
 #include "image_generator.h"
 
 static bool check_ind(const lst* list, ssize_t ind);
+static void convert_to_image(char* code_file_name, char* image_file_name);
+static void list_items(FILE* fp, const lst* list, ssize_t highlighted_pos);
+static void fill_preamble(FILE* fp);
+static void put_pointers(FILE* fp, const lst* list);
+static void draw_arrows(FILE* fp, const lst* list);
+
+static void vlist_list_items(FILE* fp, const vanilla_list* vlist, vlist_el* highlighted_pos);
 
 
 void generate_dump_image(const lst* list, ssize_t highlighted_pos)
@@ -42,8 +49,6 @@ void convert_to_image(char* code_file_name, char* image_file_name)
     char sys_str[sys_str_size] = {};
     snprintf(sys_str, sys_str_size, "dot %s -T " IMAGE_EXT " -o %s", code_file_name, image_file_name); 
 
-    //puts(sys_str);
-
     system(sys_str);
 }
 
@@ -53,7 +58,6 @@ void fill_preamble(FILE* fp)
     assert(fp != NULL);
 
     fprintf(fp, "rankdir = LR;\n");
-    //fprintf(fp, "splines = ortho\n");
     fprintf(fp, "bgcolor = \"white\"\n");
     fprintf(fp, "node[shape = doubleoctagon, style = \"filled\", fillcolor = \"red\", fontcolor = \"white\"]\n");
 }
@@ -123,7 +127,6 @@ void draw_arrows(FILE* fp, const lst* list)
     assert(fp != NULL);
     assert(list != NULL);
 
-    //fprintf(fp, "{\n");
     fprintf(fp, "edge[color = \"red\", weight = 0, penwidth = 3, constraint = false]\n");
 
     for (ssize_t i = 0; i <= (ssize_t) list->capacity; i++)
@@ -282,7 +285,3 @@ int hash(long long int ptr)
     return hashed;
 }
 
-// #e943d8
-// #373176
-// #88f09b
-// #e57250
