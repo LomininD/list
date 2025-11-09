@@ -24,6 +24,7 @@ struct lst
 
     err_t err_stat;
     md_t debug_mode;
+    bool sorted;
 };
 
 

@@ -8,7 +8,7 @@
 
 int main()
 {
-    ///*
+    /*
 
     // TIME COMPARASION 
 
@@ -50,11 +50,11 @@ int main()
 
     list_dtor(&list);
     destroy_vlist(&vlist);
-    //*/
+    */
     
     
     // LIST
-    /*
+    ///*
     
     lst list = {};
 
@@ -100,25 +100,26 @@ int main()
 
 
     // LOTS OF INSERTIONS
-    // insert_after(&list, 0, 50);
-    // insert_after(&list, 1, 10);
-    // insert_before(&list, 1, 40);
-    // insert_after(&list, 1, 10);
-    // insert_before(&list, 1, 40);
-    // insert_after(&list, 1, 10);
-    // insert_before(&list, 1, 40);
-    // insert_after(&list, 1, 10);
-    // insert_before(&list, 1, 40);
-    // insert_after(&list, 1, 10);
-    // insert_before(&list, 1, 40);
-    // insert_after(&list, 1, 10);
-    // insert_before(&list, 1, 40);
-    // insert_after(&list, 1, 10);
-    // insert_before(&list, 1, 40);
-    // // is_cleaned_up(&list);
-    // // clean_up_list(&list);
-    // // is_cleaned_up(&list);
-    // print_dump(&list, diagnostic);
+    insert_after(&list, 0, 50);
+    insert_after(&list, 1, 10);
+    insert_before(&list, 1, 40);
+    insert_after(&list, 1, 10);
+    insert_before(&list, 1, 40);
+    insert_after(&list, 1, 10);
+    insert_before(&list, 1, 40);
+    insert_after(&list, 1, 10);
+    insert_before(&list, 1, 40);
+    insert_after(&list, 1, 10);
+    insert_before(&list, 1, 40);
+    insert_after(&list, 1, 10);
+    insert_before(&list, 1, 40);
+    insert_after(&list, 1, 10);
+    insert_before(&list, 1, 40);
+    is_cleaned_up(&list);
+    clean_up_list(&list);
+    is_cleaned_up(&list);
+    clean_up_list(&list);
+    print_dump(&list, diagnostic);
     
 
     size_t cap = get_list_capacity(&list); 
@@ -129,7 +130,7 @@ int main()
     }
     list_dtor(&list);
     
-    */
+    //*/
 
 
     /*

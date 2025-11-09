@@ -28,6 +28,7 @@ err_t list_ctor(lst* list, size_t capacity)
 
     list->free_pos = 1;
     list->size = 0;
+    list->sorted = true;
 
     VERIFY_LIST(error);
 
@@ -179,6 +180,10 @@ ssize_t insert_after(lst* list, ssize_t pos, lst_t el)
     list->prev[insertion_pos] = pos;
     list->size++;
 
+    if (pos < list->prev[0])
+        list->sorted = false;
+    
+
     VERIFY_LIST(-1);
 
     printf_log_msg(debug_mode, "insert_after: insertion finished\n");
@@ -252,7 +257,7 @@ ssize_t insert_before(lst* list, ssize_t pos, lst_t el)
         return -1;
     }
 
-    printf_log_msg(debug_mode, "insert_before: redirecting function call to insert after %zd", list->prev[pos]);
+    printf_log_msg(debug_mode, "insert_before: redirecting function call to insert after %zd\n", list->prev[pos]);
 
     ssize_t insertion_pos = insert_after(list, list->prev[pos], el);
 
@@ -286,6 +291,9 @@ err_t delete_ind(lst* list, ssize_t pos)
     list->prev[pos] = -1;
     list->size--;
 
+    if (pos != list->prev[0])
+        list->sorted = false;
+
     VERIFY_LIST(error);
 
     printf_log_msg(debug_mode, "delete_ind: deleting finished\n");
@@ -300,6 +308,9 @@ err_t delete_ind(lst* list, ssize_t pos)
 err_t clean_up_list(lst* list)
 {
     VERIFY_LIST(error);
+
+    if (list->sorted)
+        return ok;
 
     md_t debug_mode = list->debug_mode;
 
@@ -355,6 +366,8 @@ err_t clean_up_list(lst* list)
     free(old_next);
     free(old_prev);
 
+    list->sorted = true;
+
     printf_log_msg(debug_mode, "clean_up_list: done cleaning up list\n");
 
     DISPLAY_LIST(-1);
@@ -367,6 +380,9 @@ err_t clean_up_list(lst* list)
 bool is_cleaned_up(lst* list)
 {
     VERIFY_LIST(false);
+
+    if (list->sorted)
+        return true;
 
     md_t debug_mode = list->debug_mode;
 
