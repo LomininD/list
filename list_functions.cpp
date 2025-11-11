@@ -397,6 +397,8 @@ bool is_cleaned_up(lst* list)
         current++;
     }
 
+    list->sorted = true;
+
     printf_log_msg(debug_mode, "is_cleaned_up: list has been cleaned up\n");
     return true;
 }

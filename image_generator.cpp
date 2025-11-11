@@ -284,4 +284,3 @@ int hash(long long int ptr)
 
     return hashed;
 }
-

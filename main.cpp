@@ -2,13 +2,16 @@
 #include <math.h>
 #include <time.h>
 
+#include <sys/resource.h>
+struct rusage usage;
+
 #include "list_functions.h"
 #include "image_generator.h"
 #include "list_dump.h"
 
 int main()
 {
-    /*
+    ///*
 
     // TIME COMPARASION 
 
@@ -16,45 +19,64 @@ int main()
     set_list_debug_mode(&list, off);
     list_ctor(&list, 10);
 
-    vanilla_list vlist = {};
-    initialise_vlist(&vlist, off);
+    // vanilla_list vlist = {};
+    // initialise_vlist(&vlist, off);
 
-    for (int i = 3; i < 10; i++)
+
+    for (int i = 3; i < 9; i++)
     {
-        clock_t start = clock();
+        getrusage(RUSAGE_SELF, &usage);
+        struct timeval begin = usage.ru_utime;
+        long long start_time = begin.tv_usec + 1000000 * begin.tv_sec;
+        printf("start_time (sec) = %ld (msec) = %d\n", begin.tv_sec, begin.tv_usec);
+        //clock_t start = clock();
         //printf("%lu\n", start);
         for (long long int j = 0; j < pow(10, i); j++)
         {
             ssize_t ind = insert_after(&list, 0, 10);
             delete_ind(&list, ind);
         }
-        clock_t finish = clock();
+        //clock_t finish = clock();
         //printf("%lu\n", finish);
-        printf("LIST: number of iterations = 10^%d, delta = %lu\n\n", i, finish - start);
-    }
+        getrusage(RUSAGE_SELF, &usage);
+        struct timeval end = usage.ru_utime;
+        long long finish_time = end.tv_usec + 1000000 * end.tv_sec;
+        printf("start_time (sec) = %ld (msec) = %d\n", end.tv_sec, end.tv_usec);
+        
+        printf("LIST: number of iterations = 10^%d, delta = %llu\n\n", i, finish_time - start_time);
+   }
 
-    for (int i = 3; i < 10; i++)
-    {
-        clock_t start = clock();
-        //printf("%lu\n", start);
-        for (long long int j = 0; j < pow(10, i); j++)
-        {
-            vlist_el* ptr = vlist_insert_after(&vlist, NULL, 10);
-            vlist_delete(&vlist, ptr);
-        }
-        clock_t finish = clock();
-        //printf("%lu\n", finish);
-        printf("VLIST: number of iterations = 10^%d, delta = %lu\n\n", i, finish - start);
-    }
+    // for (int i = 3; i < 9; i++)
+    // {
+    //     getrusage(RUSAGE_SELF, &usage);
+    //     struct timeval begin = usage.ru_utime;
+    //     long long start_time = begin.tv_usec + 1000000 * begin.tv_sec;
+    //     printf("start_time (sec) = %ld (msec) = %d\n", begin.tv_sec, begin.tv_usec);
+    //     //clock_t start = clock();
+    //     //printf("%lu\n", start);
+    //     for (long long int j = 0; j < pow(10, i); j++)
+    //     {
+    //         vlist_el* ptr = vlist_insert_after(&vlist, NULL, 10);
+    //         vlist_delete(&vlist, ptr);
+    //     }
+    //     getrusage(RUSAGE_SELF, &usage);
+    //     struct timeval end = usage.ru_utime;
+    //     long long finish_time = end.tv_usec + 1000000 * end.tv_sec;
+    //     printf("start_time (sec) = %ld (msec) = %d\n", end.tv_sec, end.tv_usec);
+    //     
+    //     //clock_t finish = clock();
+    //     //printf("%lu\n", finish);
+    //     printf("VLIST: number of iterations = 10^%d, delta = %llu\n\n", i, finish_time-start_time);
+    // }
 
 
     list_dtor(&list);
-    destroy_vlist(&vlist);
-    */
+    //destroy_vlist(&vlist);
+    //*/
     
     
     // LIST
-    ///*
+    /*
     
     lst list = {};
 
@@ -130,7 +152,7 @@ int main()
     }
     list_dtor(&list);
     
-    //*/
+    */
 
 
     /*

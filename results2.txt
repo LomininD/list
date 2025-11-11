@@ -1,0 +1,199 @@
+LOOP 0
+
+start_time (sec) = 0 (msec) = 1262
+start_time (sec) = 0 (msec) = 1341
+VLIST: number of iterations = 10^3, delta = 79
+
+start_time (sec) = 0 (msec) = 1343
+start_time (sec) = 0 (msec) = 2081
+VLIST: number of iterations = 10^4, delta = 738
+
+start_time (sec) = 0 (msec) = 2083
+start_time (sec) = 0 (msec) = 10007
+VLIST: number of iterations = 10^5, delta = 7924
+
+start_time (sec) = 0 (msec) = 10014
+start_time (sec) = 0 (msec) = 58259
+VLIST: number of iterations = 10^6, delta = 48245
+
+start_time (sec) = 0 (msec) = 58267
+start_time (sec) = 0 (msec) = 417474
+VLIST: number of iterations = 10^7, delta = 359207
+
+start_time (sec) = 0 (msec) = 417479
+start_time (sec) = 4 (msec) = 7824
+VLIST: number of iterations = 10^8, delta = 3590345
+
+start_time (sec) = 4 (msec) = 7828
+start_time (sec) = 4 (msec) = 7842
+LIST: number of iterations = 10^3, delta = 14
+
+start_time (sec) = 4 (msec) = 7843
+start_time (sec) = 4 (msec) = 7961
+LIST: number of iterations = 10^4, delta = 118
+
+start_time (sec) = 4 (msec) = 7962
+start_time (sec) = 4 (msec) = 9134
+LIST: number of iterations = 10^5, delta = 1172
+
+start_time (sec) = 4 (msec) = 9135
+start_time (sec) = 4 (msec) = 20828
+LIST: number of iterations = 10^6, delta = 11693
+
+start_time (sec) = 4 (msec) = 20830
+start_time (sec) = 4 (msec) = 137815
+LIST: number of iterations = 10^7, delta = 116985
+
+start_time (sec) = 4 (msec) = 137816
+start_time (sec) = 5 (msec) = 307841
+LIST: number of iterations = 10^8, delta = 1170025
+
+LOOP 1
+
+start_time (sec) = 5 (msec) = 307846
+start_time (sec) = 5 (msec) = 307887
+VLIST: number of iterations = 10^3, delta = 41
+
+start_time (sec) = 5 (msec) = 307888
+start_time (sec) = 5 (msec) = 308248
+VLIST: number of iterations = 10^4, delta = 360
+
+start_time (sec) = 5 (msec) = 308249
+start_time (sec) = 5 (msec) = 311836
+VLIST: number of iterations = 10^5, delta = 3587
+
+start_time (sec) = 5 (msec) = 311837
+start_time (sec) = 5 (msec) = 347719
+VLIST: number of iterations = 10^6, delta = 35882
+
+start_time (sec) = 5 (msec) = 347721
+start_time (sec) = 5 (msec) = 706589
+VLIST: number of iterations = 10^7, delta = 358868
+
+start_time (sec) = 5 (msec) = 706590
+start_time (sec) = 9 (msec) = 296124
+VLIST: number of iterations = 10^8, delta = 3589534
+
+start_time (sec) = 9 (msec) = 296129
+start_time (sec) = 9 (msec) = 296143
+LIST: number of iterations = 10^3, delta = 14
+
+start_time (sec) = 9 (msec) = 296144
+start_time (sec) = 9 (msec) = 296263
+LIST: number of iterations = 10^4, delta = 119
+
+start_time (sec) = 9 (msec) = 296264
+start_time (sec) = 9 (msec) = 297430
+LIST: number of iterations = 10^5, delta = 1166
+
+start_time (sec) = 9 (msec) = 297432
+start_time (sec) = 9 (msec) = 309148
+LIST: number of iterations = 10^6, delta = 11716
+
+start_time (sec) = 9 (msec) = 309149
+start_time (sec) = 9 (msec) = 426042
+LIST: number of iterations = 10^7, delta = 116893
+
+start_time (sec) = 9 (msec) = 426046
+start_time (sec) = 10 (msec) = 594691
+LIST: number of iterations = 10^8, delta = 1168645
+
+LOOP 2
+
+start_time (sec) = 10 (msec) = 594693
+start_time (sec) = 10 (msec) = 594733
+VLIST: number of iterations = 10^3, delta = 40
+
+start_time (sec) = 10 (msec) = 594734
+start_time (sec) = 10 (msec) = 595094
+VLIST: number of iterations = 10^4, delta = 360
+
+start_time (sec) = 10 (msec) = 595095
+start_time (sec) = 10 (msec) = 598697
+VLIST: number of iterations = 10^5, delta = 3602
+
+start_time (sec) = 10 (msec) = 598698
+start_time (sec) = 10 (msec) = 634587
+VLIST: number of iterations = 10^6, delta = 35889
+
+start_time (sec) = 10 (msec) = 634589
+start_time (sec) = 10 (msec) = 993376
+VLIST: number of iterations = 10^7, delta = 358787
+
+start_time (sec) = 10 (msec) = 993378
+start_time (sec) = 14 (msec) = 581755
+VLIST: number of iterations = 10^8, delta = 3588377
+
+start_time (sec) = 14 (msec) = 581760
+start_time (sec) = 14 (msec) = 581774
+LIST: number of iterations = 10^3, delta = 14
+
+start_time (sec) = 14 (msec) = 581776
+start_time (sec) = 14 (msec) = 581893
+LIST: number of iterations = 10^4, delta = 117
+
+start_time (sec) = 14 (msec) = 581895
+start_time (sec) = 14 (msec) = 583066
+LIST: number of iterations = 10^5, delta = 1171
+
+start_time (sec) = 14 (msec) = 583068
+start_time (sec) = 14 (msec) = 594780
+LIST: number of iterations = 10^6, delta = 11712
+
+start_time (sec) = 14 (msec) = 594781
+start_time (sec) = 14 (msec) = 711561
+LIST: number of iterations = 10^7, delta = 116780
+
+start_time (sec) = 14 (msec) = 711562
+start_time (sec) = 15 (msec) = 880935
+LIST: number of iterations = 10^8, delta = 1169373
+
+LOOP 3
+
+start_time (sec) = 15 (msec) = 880941
+start_time (sec) = 15 (msec) = 880981
+VLIST: number of iterations = 10^3, delta = 40
+
+start_time (sec) = 15 (msec) = 880982
+start_time (sec) = 15 (msec) = 881342
+VLIST: number of iterations = 10^4, delta = 360
+
+start_time (sec) = 15 (msec) = 881343
+start_time (sec) = 15 (msec) = 884931
+VLIST: number of iterations = 10^5, delta = 3588
+
+start_time (sec) = 15 (msec) = 884933
+start_time (sec) = 15 (msec) = 920842
+VLIST: number of iterations = 10^6, delta = 35909
+
+start_time (sec) = 15 (msec) = 920843
+start_time (sec) = 16 (msec) = 279691
+VLIST: number of iterations = 10^7, delta = 358848
+
+start_time (sec) = 16 (msec) = 279695
+start_time (sec) = 19 (msec) = 868103
+VLIST: number of iterations = 10^8, delta = 3588408
+
+start_time (sec) = 19 (msec) = 868107
+start_time (sec) = 19 (msec) = 868120
+LIST: number of iterations = 10^3, delta = 13
+
+start_time (sec) = 19 (msec) = 868122
+start_time (sec) = 19 (msec) = 868240
+LIST: number of iterations = 10^4, delta = 118
+
+start_time (sec) = 19 (msec) = 868241
+start_time (sec) = 19 (msec) = 869414
+LIST: number of iterations = 10^5, delta = 1173
+
+start_time (sec) = 19 (msec) = 869417
+start_time (sec) = 19 (msec) = 881129
+LIST: number of iterations = 10^6, delta = 11712
+
+start_time (sec) = 19 (msec) = 881130
+start_time (sec) = 19 (msec) = 997961
+LIST: number of iterations = 10^7, delta = 116831
+
+start_time (sec) = 19 (msec) = 997965
+start_time (sec) = 21 (msec) = 166778
+LIST: number of iterations = 10^8, delta = 1168813
