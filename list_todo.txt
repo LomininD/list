@@ -1,23 +1,9 @@
-// TODO - make verificator and dump disableable (done)
-// TODO - combine insert (done)
-// TODO - make classical list (done)
-// TODO - make list sort function (done)
-// TODO - make function that checks if list is sorted - sorts in new memory (done)
-// TODO - review code (done)
-// TODO - reallocation (done)
-// TODO - time in log
-// TODO - debug mode as argument in ctor
-// TODO - time tests
-// TODO - clean up code
-
-// TODO - add static to image generator and dump 
 
 --QUESTIONS--
 // TODO - why fprintf requires FILE* but not const FILE*
 // TODO - if we create struct in func the struct will be destroyed if we leave function 
 // TODO - how to check if pointer is ok
-// TODO - do I need to make cond compilation for list and vlist?
-// TODO - classical list destructor crushes if element points on deleted element 
+// TODO - what happens when I interrupt proccess
 
 
 --TO READ--

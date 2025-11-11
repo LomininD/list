@@ -8,11 +8,10 @@ struct rusage usage;
 #include "image_generator.h"
 #include "list_dump.h"
 
+
 int main()
 {
-
     // TIME COMPARASION 
-    //pthread_set_qos_class_self_np()
 
     lst list = {};
     set_list_debug_mode(&list, off);
@@ -42,7 +41,7 @@ int main()
             getrusage(RUSAGE_SELF, &usage);
             struct timeval end = usage.ru_utime;
             long long finish_time = end.tv_usec + 1000000 * end.tv_sec;
-            printf("start_time (sec) = %ld (msec) = %d\n", end.tv_sec, end.tv_usec);
+            printf("finish_time (sec) = %ld (msec) = %d\n", end.tv_sec, end.tv_usec);
             
             //clock_t finish = clock();
             //printf("%lu\n", finish);
@@ -68,7 +67,7 @@ int main()
             getrusage(RUSAGE_SELF, &usage);
             struct timeval end = usage.ru_utime;
             long long finish_time = end.tv_usec + 1000000 * end.tv_sec;
-            printf("start_time (sec) = %ld (msec) = %d\n", end.tv_sec, end.tv_usec);
+            printf("finish_time (sec) = %ld (msec) = %d\n", end.tv_sec, end.tv_usec);
             
             printf("LIST: number of iterations = 10^%d, delta = %llu\n\n", i, finish_time - start_time);
         }

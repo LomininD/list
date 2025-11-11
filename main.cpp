@@ -4,6 +4,7 @@
 
 #include <sys/resource.h>
 struct rusage usage;
+#include <pthread.h>
 
 #include "list_functions.h"
 #include "image_generator.h"
@@ -21,6 +22,7 @@ int main()
 
     // vanilla_list vlist = {};
     // initialise_vlist(&vlist, off);
+    
 
 
     for (int i = 3; i < 9; i++)
