@@ -13,7 +13,7 @@ BUILD = build
 SRCMODULES = list_functions.cpp debug.cpp list_dump.cpp image_generator.cpp
 OBJMODULES = $(SRCMODULES:.cpp=.o)
 
-$(BUILD)/list: time_test.cpp $(addprefix $(BUILD)/,$(OBJMODULES))
+$(BUILD)/list: main.cpp $(addprefix $(BUILD)/,$(OBJMODULES))
 	$(CPP) $(CPPFLAGS) $^ -o $@
 
 $(BUILD)/%.o: %.cpp

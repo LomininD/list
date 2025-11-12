@@ -1,6 +1,5 @@
 
 --QUESTIONS--
-// TODO - why fprintf requires FILE* but not const FILE*
 // TODO - if we create struct in func the struct will be destroyed if we leave function 
 // TODO - how to check if pointer is ok
 // TODO - what happens when I interrupt proccess

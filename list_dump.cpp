@@ -356,7 +356,6 @@ void print_vlist_dump(const vanilla_list* vlist, dump_purpose purpose)
 
         current_el = current_el->next;
     }
-
     printf_log_bold(debug_mode, "\n===========================================================================\n\n", NULL);
 
     vlist_generate_dump_image(vlist, NULL);
