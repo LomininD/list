@@ -4,6 +4,8 @@
 #include <sys/resource.h>
 struct rusage usage;
 
+#include <pthread.h>
+
 #include "list_functions.h"
 #include "image_generator.h"
 #include "list_dump.h"
@@ -12,6 +14,8 @@ struct rusage usage;
 int main()
 {
     // TIME COMPARASION 
+
+    pthread_set_qos_class_self_np (QOS_CLASS_USER_INTERACTIVE, 0);
 
     lst list = {};
     set_list_debug_mode(&list, off);
